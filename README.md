@@ -137,3 +137,6 @@ Nela é possível:
 - visualizar indicadores e gráficos.
 
 
+## Observação
+
+Este projeto está em desenvolvimento e não representa sua versão final.
