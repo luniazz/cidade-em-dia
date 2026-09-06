@@ -1,0 +1,39 @@
+{
+  "name": "cidade-em-dia",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "format": "oxfmt src package.json package-lock.json tsconfig.json vitest.config.ts .oxlintrc.json .mise.toml index.html",
+    "format:check": "oxfmt --check src package.json package-lock.json tsconfig.json vitest.config.ts .oxlintrc.json .mise.toml index.html",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build"
+  },
+  "dependencies": {
+    "lucide-react": "^1.41.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router": "8.3.1",
+    "recharts": "^3.10.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "fake-indexeddb": "6.2.5",
+    "oxfmt": "^0.2.0",
+    "oxlint": "^1.81.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.0",
+    "vite": "^8.0.5",
+    "vitest": "^5.0.0"
+  }
+}
