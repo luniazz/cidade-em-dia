@@ -8,6 +8,9 @@ import java.util.regex.Pattern;
 
 /**
  * Solicitação de zeladoria urbana, principal entidade do domínio.
+ *
+ * Pode ser anônima ou associada a um cidadão autenticado, e pode ter uma foto
+ * ({@link Anexo}) opcional.
  */
 public class Solicitacao {
     private static final int TAMANHO_MINIMO_ENDERECO = 5;
@@ -23,9 +26,12 @@ public class Solicitacao {
     private final String pontoReferencia;
     private final String nome;
     private final String email;
+    private final Usuario usuario;
+    private final Anexo anexo;
     private StatusSolicitacao statusAtual;
     private final List<HistoricoStatus> historico = new ArrayList<>();
 
+    /** Solicitação anônima e sem anexo, como na Fase 2. */
     public Solicitacao(
             String protocolo,
             Categoria categoria,
@@ -34,10 +40,30 @@ public class Solicitacao {
             String pontoReferencia,
             String nome,
             String email) {
+        this(protocolo, categoria, endereco, descricao, pontoReferencia, nome, email, null, null);
+    }
+
+    /**
+     * @param nome    contato informado no formulário; se ausente, vale o nome do usuário
+     * @param email   contato informado no formulário; se ausente, vale o e-mail do usuário
+     * @param usuario cidadão autenticado que registrou a solicitação, ou null se anônima
+     * @param anexo   foto opcional, ou null
+     */
+    public Solicitacao(
+            String protocolo,
+            Categoria categoria,
+            String endereco,
+            String descricao,
+            String pontoReferencia,
+            String nome,
+            String email,
+            Usuario usuario,
+            Anexo anexo) {
         if (protocolo == null || protocolo.isBlank()) {
             throw new IllegalArgumentException("O protocolo é obrigatório.");
         }
         validarDados(categoria, endereco, descricao, email);
+        validarUsuario(usuario);
 
         this.protocolo = protocolo;
         this.categoria = categoria;
@@ -46,6 +72,8 @@ public class Solicitacao {
         this.pontoReferencia = opcional(pontoReferencia);
         this.nome = opcional(nome);
         this.email = opcional(email);
+        this.usuario = usuario;
+        this.anexo = anexo;
 
         // Toda nova solicitação começa como RECEBIDA, também registrada no histórico.
         this.statusAtual = StatusSolicitacao.RECEBIDA;
@@ -73,9 +101,25 @@ public class Solicitacao {
                     "A descrição deve possuir no mínimo " + TAMANHO_MINIMO_DESCRICAO + " caracteres.");
         }
         String emailTratado = opcional(email);
-        if (emailTratado != null && !FORMATO_EMAIL.matcher(emailTratado).matches()) {
+        if (emailTratado != null && !emailValido(emailTratado)) {
             throw new IllegalArgumentException("O e-mail informado não possui um formato válido.");
         }
+    }
+
+    /**
+     * Uma solicitação só pode ser associada a um cidadão; null indica anônima.
+     *
+     * @throws IllegalArgumentException quando o usuário não possui perfil Cidadão
+     */
+    public static void validarUsuario(Usuario usuario) {
+        if (usuario != null && !usuario.possuiPerfil(PerfilUsuario.CIDADAO)) {
+            throw new IllegalArgumentException("Somente cidadãos podem ser associados a uma solicitação.");
+        }
+    }
+
+    /** Validação básica de e-mail, compartilhada com {@link Usuario}. */
+    static boolean emailValido(String email) {
+        return FORMATO_EMAIL.matcher(email).matches();
     }
 
     /**
@@ -112,12 +156,28 @@ public class Solicitacao {
         return pontoReferencia;
     }
 
+    /** Nome de contato: o informado ou, se ausente, o do usuário associado. Pode ser null. */
     public String getNome() {
-        return nome;
+        return nome != null || usuario == null ? nome : usuario.getNome();
     }
 
+    /** E-mail de contato: o informado ou, se ausente, o do usuário associado. Pode ser null. */
     public String getEmail() {
-        return email;
+        return email != null || usuario == null ? email : usuario.getEmail();
+    }
+
+    /** Cidadão associado, ou null quando a solicitação é anônima. */
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public boolean isAnonima() {
+        return usuario == null;
+    }
+
+    /** Foto opcional, ou null. */
+    public Anexo getAnexo() {
+        return anexo;
     }
 
     public StatusSolicitacao getStatusAtual() {
