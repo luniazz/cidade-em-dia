@@ -20,32 +20,32 @@ const CATEGORY_VISUALS = {
   "buracos-vias": {
     icon: Construction,
     desc: "Buracos e danos no pavimento",
-    color: "#E85D3B",
-    bg: "#FEF0EC",
+    color: "var(--cd-orange)",
+    bg: "var(--cd-orange-tint)",
   },
   "iluminacao-publica": {
     icon: Lightbulb,
     desc: "Postes apagados ou com defeito",
-    color: "#D97706",
-    bg: "#FFFBEB",
+    color: "var(--cd-amber)",
+    bg: "var(--cd-amber-tint)",
   },
   "descarte-irregular": {
     icon: Trash2,
     desc: "Lixo ou entulho em local indevido",
-    color: "#6B7280",
-    bg: "#F3F4F6",
+    color: "var(--cd-gray)",
+    bg: "var(--cd-gray-tint)",
   },
   "poda-arvores": {
     icon: Trees,
     desc: "Galhos perigosos ou obstruindo vias",
-    color: "#059669",
-    bg: "#ECFDF5",
+    color: "var(--cd-green)",
+    bg: "var(--cd-green-tint-soft)",
   },
   sinalizacao: {
     icon: TriangleAlert,
     desc: "Placas de trânsito danificadas",
-    color: "#7C3AED",
-    bg: "#EDE9FE",
+    color: "var(--cd-purple)",
+    bg: "var(--cd-purple-tint)",
   },
 } satisfies Record<RequestCategoryId, {
   icon: typeof Construction
@@ -138,7 +138,7 @@ export default function Home() {
       {/* Hero */}
       <section
         className="py-16 sm:py-24"
-        style={{ backgroundColor: "#243F73" }}
+        style={{ backgroundColor: "var(--cd-brand)" }}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="max-w-2xl">
@@ -185,7 +185,7 @@ export default function Home() {
       </section>
 
       {/* Stats strip */}
-      <section className="bg-white border-b" style={{ borderColor: "#DCE5F7" }}>
+      <section className="bg-white border-b" style={{ borderColor: "var(--cd-border)" }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
             {stats.map((s) => (
@@ -193,7 +193,7 @@ export default function Home() {
                 <p
                   className="text-2xl font-bold"
                   style={{
-                    color: "#243F73",
+                    color: "var(--cd-navy)",
                     fontFamily: "var(--font-display)",
                   }}
                 >
@@ -212,11 +212,11 @@ export default function Home() {
       </section>
 
       {/* How it works */}
-      <section className="py-16" style={{ backgroundColor: "#F6F8FC" }}>
+      <section className="py-16" style={{ backgroundColor: "var(--cd-page)" }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <h2
             className="text-2xl font-bold mb-2"
-            style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
           >
             Como funciona
           </h2>
@@ -230,19 +230,19 @@ export default function Home() {
               <div
                 key={step.num}
                 className="bg-white rounded-xl p-6 border"
-                style={{ borderColor: "#DCE5F7" }}
+                style={{ borderColor: "var(--cd-border)" }}
               >
                 <div className="flex items-start gap-4 mb-4">
                   <div
                     className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                    style={{ backgroundColor: "#DCE5F7" }}
+                    style={{ backgroundColor: "var(--cd-mist)" }}
                   >
-                    <step.icon size={20} style={{ color: "#243F73" }} />
+                    <step.icon size={20} style={{ color: "var(--cd-navy)" }} />
                   </div>
                   <span
                     className="text-3xl font-extrabold leading-none mt-0.5"
                     style={{
-                      color: "#DCE5F7",
+                      color: "var(--cd-mist)",
                       fontFamily: "var(--font-display)",
                     }}
                   >
@@ -252,7 +252,7 @@ export default function Home() {
                 <h3
                   className="font-semibold text-base mb-1"
                   style={{
-                    color: "#243F73",
+                    color: "var(--cd-navy)",
                     fontFamily: "var(--font-display)",
                   }}
                 >
@@ -272,7 +272,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <h2
             className="text-2xl font-bold mb-2"
-            style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
           >
             Tipos de solicitação
           </h2>
@@ -286,7 +286,7 @@ export default function Home() {
                 key={cat.id}
                 to="/nova-solicitacao"
                 className="group flex flex-col items-center text-center p-4 rounded-xl border transition-all hover:shadow-md hover:-translate-y-0.5"
-                style={{ borderColor: "#DCE5F7", backgroundColor: cat.bg }}
+                style={{ borderColor: "var(--cd-border)", backgroundColor: cat.bg }}
               >
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center mb-3 transition-transform group-hover:scale-110"
@@ -297,7 +297,7 @@ export default function Home() {
                 <span
                   className="text-xs font-semibold leading-tight"
                   style={{
-                    color: "#1a2535",
+                    color: "var(--cd-ink)",
                     fontFamily: "var(--font-display)",
                   }}
                 >
@@ -313,16 +313,16 @@ export default function Home() {
       </section>
 
       {/* CTA footer strip */}
-      <section className="py-14" style={{ backgroundColor: "#DCE5F7" }}>
+      <section className="py-14" style={{ backgroundColor: "var(--cd-mist)" }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
             <h2
               className="text-xl font-bold mb-1"
-              style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+              style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
             >
               Encontrou um problema na sua rua?
             </h2>
-            <p className="text-sm" style={{ color: "#5978B5" }}>
+            <p className="text-sm" style={{ color: "var(--cd-blue)" }}>
               Registre agora e ajude a manter nossa cidade em dia.
             </p>
           </div>
@@ -330,7 +330,7 @@ export default function Home() {
             to="/nova-solicitacao"
             className="whitespace-nowrap flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all hover:opacity-90"
             style={{
-              backgroundColor: "#243F73",
+              backgroundColor: "var(--cd-primary)",
               color: "white",
               fontFamily: "var(--font-display)",
             }}

@@ -12,10 +12,132 @@ html, body, #root {
   height: 100%;
 }
 
+/*
+ * Paleta de cores do tema. No modo claro os valores são exatamente as cores
+ * originais do design aprovado; a classe `dark` no <html> troca apenas os
+ * valores. Os componentes usam `var(--cd-*)` nos estilos inline.
+ */
+:root {
+  color-scheme: light;
+
+  /* Superfícies e bordas */
+  --cd-page: #F6F8FC;
+  --cd-surface: #FFFFFF;
+  --cd-mist: #DCE5F7;
+  --cd-border: #DCE5F7;
+  --cd-border-neutral: #E5E7EB;
+  --cd-brand: #243F73;
+  --cd-primary: #243F73;
+  --cd-blue-solid: #5978B5;
+  --cd-blue-border: #A8BEE5;
+
+  /* Textos */
+  --cd-navy: #243F73;
+  --cd-ink: #1a2535;
+  --cd-blue: #5978B5;
+  --cd-faint: #9CA3AF;
+  --cd-gray: #6B7280;
+  --cd-gray-strong: #374151;
+
+  /* Mensagens */
+  --cd-danger: #DC2626;
+  --cd-danger-bg: #FEF2F2;
+  --cd-danger-tint: #FEE2E2;
+  --cd-danger-border: #FECACA;
+  --cd-amber-ink: #92400E;
+  --cd-amber-border: #FDE68A;
+
+  /* Cores de categorias e indicadores, com seus fundos suaves */
+  --cd-orange: #E85D3B;
+  --cd-orange-tint: #FEF0EC;
+  --cd-amber: #D97706;
+  --cd-amber-tint: #FFFBEB;
+  --cd-amber-tint-strong: #FEF3C7;
+  --cd-green: #059669;
+  --cd-green-tint: #D1FAE5;
+  --cd-green-tint-soft: #ECFDF5;
+  --cd-purple: #7C3AED;
+  --cd-purple-tint: #EDE9FE;
+  --cd-gray-tint: #F3F4F6;
+
+  /* Gráficos */
+  --cd-chart-1: #243F73;
+  --cd-chart-2: #5978B5;
+  --cd-chart-3: #7A9ED4;
+  --cd-chart-4: #A8BEE5;
+  --cd-chart-5: #DCE5F7;
+  --cd-chart-bar-2: #DCE5F7;
+}
+
+/* Modo escuro: azul-marinho profundo (sem preto absoluto) e textos claros
+   suaves, mantendo a identidade azul do Cidade em Dia. */
+.dark {
+  color-scheme: dark;
+
+  --cd-page: #0F1729;
+  --cd-surface: #172036;
+  --cd-mist: #22304D;
+  --cd-border: #2A3A5C;
+  --cd-border-neutral: #2A3A5C;
+  --cd-brand: #182544;
+  --cd-primary: #3A5B9C;
+  --cd-blue-solid: #6F8FCB;
+  --cd-blue-border: #3A5B9C;
+
+  --cd-navy: #D3E0F5;
+  --cd-ink: #E2E8F0;
+  --cd-blue: #93B0E6;
+  --cd-faint: #8391AA;
+  --cd-gray: #A3B1C8;
+  --cd-gray-strong: #CBD5E1;
+
+  --cd-danger: #FCA5A5;
+  --cd-danger-bg: #2B1719;
+  --cd-danger-tint: #3F1D20;
+  --cd-danger-border: #7F1D1D;
+  --cd-amber-ink: #FCD34D;
+  --cd-amber-border: #6B5420;
+
+  --cd-orange: #F08A6E;
+  --cd-orange-tint: #3A2019;
+  --cd-amber: #FBBF24;
+  --cd-amber-tint: #2B2414;
+  --cd-amber-tint-strong: #3A2E12;
+  --cd-green: #34D399;
+  --cd-green-tint: #14352A;
+  --cd-green-tint-soft: #12291F;
+  --cd-purple: #A78BFA;
+  --cd-purple-tint: #2A2347;
+  --cd-gray-tint: #243045;
+
+  --cd-chart-1: #93B0E6;
+  --cd-chart-2: #5B7FC4;
+  --cd-chart-3: #C5D5F2;
+  --cd-chart-4: #3F5E9E;
+  --cd-chart-5: #7A9ED4;
+  --cd-chart-bar-2: #3A4F7A;
+
+  /* Utilitários de cor do Tailwind usados nas telas (texto secundário,
+     mensagens e fundos neutros). */
+  --color-gray-50: #1B2640;
+  --color-gray-300: #4A5875;
+  --color-gray-400: #8391AA;
+  --color-gray-500: #9AA8BF;
+  --color-gray-600: #B4C0D3;
+  --color-red-500: #F87171;
+  --color-red-600: #FCA5A5;
+  --color-blue-100: #2A3A5C;
+}
+
+/* Cards, cabeçalhos e rodapés usam `bg-white`; no escuro viram superfície. */
+.dark .bg-white {
+  background-color: var(--cd-surface);
+}
+
 body {
   font-family: var(--font-body);
-  background-color: #F6F8FC;
-  color: #1a2535;
+  background-color: var(--cd-page);
+  color: var(--cd-ink);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -25,7 +147,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Scrollbar fina e discreta (WebKit e Firefox). */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #DCE5F7 transparent;
+  scrollbar-color: var(--cd-border) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -38,7 +160,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #DCE5F7;
+  background-color: var(--cd-border);
   border-radius: 3px;
 }
 
@@ -48,27 +170,35 @@ h1, h2, h3, h4, h5, h6 {
 .status-execucao { background-color: #EDE9FE; color: #5B21B6; }
 .status-resolvida { background-color: #D1FAE5; color: #065F46; }
 
+/* Status no escuro: mesmas famílias de cor, com fundo translúcido e texto
+   claro para manter contraste. */
+.dark .status-recebida { background-color: #374151; color: #E5E7EB; }
+.dark .status-analise { background-color: rgba(245, 158, 11, 0.18); color: #FCD34D; }
+.dark .status-programada { background-color: rgba(59, 130, 246, 0.2); color: #93C5FD; }
+.dark .status-execucao { background-color: rgba(139, 92, 246, 0.22); color: #C4B5FD; }
+.dark .status-resolvida { background-color: rgba(16, 185, 129, 0.2); color: #6EE7B7; }
+
 .nav-link {
   font-family: var(--font-display);
   font-weight: 500;
   font-size: 0.875rem;
-  color: #243F73;
+  color: var(--cd-navy);
   padding: 0.375rem 0.75rem;
   border-radius: 6px;
   transition: background-color 0.15s, color 0.15s;
 }
 
 .nav-link:hover {
-  background-color: #DCE5F7;
+  background-color: var(--cd-mist);
 }
 
 .nav-link.active {
-  background-color: #243F73;
+  background-color: var(--cd-primary);
   color: white;
 }
 
 input:focus, textarea:focus, select:focus {
-  outline: 2px solid #5978B5;
+  outline: 2px solid var(--cd-blue-solid);
   outline-offset: 1px;
 }
 
@@ -78,5 +208,5 @@ input:focus, textarea:focus, select:focus {
 :where(a, button):focus-visible {
   outline: 2px solid #FFFFFF;
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px #243F73;
+  box-shadow: 0 0 0 4px var(--cd-primary);
 }

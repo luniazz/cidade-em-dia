@@ -126,8 +126,8 @@ export default function UserMenu({ variant }: UserMenuProps) {
   }
 
   const itemClass =
-    "flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-left transition-colors hover:bg-[#DCE5F7]"
-  const itemStyle = { color: "#243F73", fontFamily: "var(--font-display)" }
+    "flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-left transition-colors hover:bg-[var(--cd-mist)]"
+  const itemStyle = { color: "var(--cd-navy)", fontFamily: "var(--font-display)" }
 
   return (
     <div ref={containerRef} className="relative ml-2">
@@ -151,15 +151,15 @@ export default function UserMenu({ variant }: UserMenuProps) {
         <div
           id={menuId}
           className="absolute right-0 mt-2 w-52 bg-white rounded-lg border p-1.5 shadow-lg"
-          style={{ borderColor: "#DCE5F7" }}
+          style={{ borderColor: "var(--cd-border)" }}
         >
           <div
             className="px-3 py-2 mb-1 border-b"
-            style={{ borderColor: "#DCE5F7" }}
+            style={{ borderColor: "var(--cd-border)" }}
           >
             <p
               className="text-sm font-semibold truncate"
-              style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+              style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
             >
               {user.name}
             </p>

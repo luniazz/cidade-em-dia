@@ -50,27 +50,27 @@ export default function Entrar() {
 
   const inputClass = "w-full rounded-lg border px-3.5 py-2.5 text-sm"
   const inputStyle = {
-    borderColor: error ? "#EF4444" : "#DCE5F7",
-    backgroundColor: "white",
+    borderColor: error ? "#EF4444" : "var(--cd-border)",
+    backgroundColor: "var(--cd-surface)",
   }
-  const labelStyle = { color: "#243F73", fontFamily: "var(--font-display)" }
+  const labelStyle = { color: "var(--cd-navy)", fontFamily: "var(--font-display)" }
 
   return (
     <main className="w-full max-w-md mx-auto px-4 sm:px-6 py-10 sm:py-16">
       <div
         className="bg-white rounded-xl border p-6 sm:p-8"
-        style={{ borderColor: "#DCE5F7" }}
+        style={{ borderColor: "var(--cd-border)" }}
       >
         <div className="flex flex-col items-center text-center mb-6">
           <div
             className="w-12 h-12 rounded-xl flex items-center justify-center mb-3"
-            style={{ backgroundColor: "#243F73" }}
+            style={{ backgroundColor: "var(--cd-primary)" }}
           >
             <MapPin size={22} color="white" strokeWidth={2.5} />
           </div>
           <h1
             className="text-2xl font-bold mb-1"
-            style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
           >
             Entrar no Cidade em Dia
           </h1>
@@ -142,7 +142,7 @@ export default function Entrar() {
             disabled={submitting}
             className="w-full py-3 rounded-lg text-sm font-semibold transition-all hover:opacity-90 disabled:opacity-60"
             style={{
-              backgroundColor: "#243F73",
+              backgroundColor: "var(--cd-primary)",
               color: "white",
               fontFamily: "var(--font-display)",
             }}
@@ -155,7 +155,7 @@ export default function Entrar() {
       <Link
         to="/"
         className="text-sm mt-6 flex items-center justify-center gap-1"
-        style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
+        style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
       >
         ← Voltar ao início
       </Link>

@@ -88,24 +88,24 @@ export default function Detalhes() {
         <Link
           to="/acompanhar"
           className="text-sm mb-6 flex items-center gap-1"
-          style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
+          style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
         >
           ← Voltar
         </Link>
         <div
           className="rounded-xl border p-6 flex flex-col items-center text-center gap-3"
-          style={{ borderColor: "#FECACA", backgroundColor: "#FEF2F2" }}
+          style={{ borderColor: "var(--cd-danger-border)", backgroundColor: "var(--cd-danger-bg)" }}
         >
           <div
             className="w-12 h-12 rounded-full flex items-center justify-center"
-            style={{ backgroundColor: "#FEE2E2" }}
+            style={{ backgroundColor: "var(--cd-danger-tint)" }}
           >
-            <AlertCircle size={24} style={{ color: "#DC2626" }} />
+            <AlertCircle size={24} style={{ color: "var(--cd-danger)" }} />
           </div>
           <div>
             <p
               className="font-semibold text-sm mb-1"
-              style={{ color: "#DC2626", fontFamily: "var(--font-display)" }}
+              style={{ color: "var(--cd-danger)", fontFamily: "var(--font-display)" }}
             >
               {title}
             </p>
@@ -124,7 +124,7 @@ export default function Detalhes() {
       <Link
         to="/acompanhar"
         className="text-sm mb-6 flex items-center gap-1"
-        style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
+        style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
       >
         ← Voltar
       </Link>
@@ -134,13 +134,13 @@ export default function Detalhes() {
         <div>
           <p
             className="text-xs font-semibold uppercase tracking-widest mb-1"
-            style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
           >
             Protocolo
           </p>
           <h1
             className="text-2xl font-bold"
-            style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
           >
             {found.protocol}
           </h1>
@@ -154,15 +154,15 @@ export default function Detalhes() {
       {/* Info */}
       <div
         className="rounded-xl border overflow-hidden mb-8"
-        style={{ borderColor: "#DCE5F7" }}
+        style={{ borderColor: "var(--cd-border)" }}
       >
         <div
           className="px-4 py-3 border-b"
-          style={{ backgroundColor: "#F6F8FC", borderColor: "#DCE5F7" }}
+          style={{ backgroundColor: "var(--cd-page)", borderColor: "var(--cd-border)" }}
         >
           <h2
             className="text-sm font-semibold"
-            style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
           >
             Dados da solicitação
           </h2>
@@ -192,7 +192,7 @@ export default function Detalhes() {
               </span>
               <span
                 className="text-sm sm:col-span-2"
-                style={{ color: "#1a2535", fontFamily: "var(--font-display)" }}
+                style={{ color: "var(--cd-ink)", fontFamily: "var(--font-display)" }}
               >
                 {row.val}
               </span>
@@ -204,15 +204,15 @@ export default function Detalhes() {
       {/* Timeline */}
       <div
         className="rounded-xl border overflow-hidden"
-        style={{ borderColor: "#DCE5F7" }}
+        style={{ borderColor: "var(--cd-border)" }}
       >
         <div
           className="px-4 py-3 border-b"
-          style={{ backgroundColor: "#F6F8FC", borderColor: "#DCE5F7" }}
+          style={{ backgroundColor: "var(--cd-page)", borderColor: "var(--cd-border)" }}
         >
           <h2
             className="text-sm font-semibold"
-            style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
           >
             Histórico de atendimento
           </h2>
@@ -222,7 +222,7 @@ export default function Detalhes() {
             {/* Vertical line */}
             <div
               className="absolute left-[15px] top-0 w-0.5 bottom-0"
-              style={{ backgroundColor: "#DCE5F7" }}
+              style={{ backgroundColor: "var(--cd-mist)" }}
             />
 
             <div className="flex flex-col gap-6">
@@ -242,13 +242,13 @@ export default function Detalhes() {
                     <div
                       className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 z-10 border-2"
                       style={{
-                        backgroundColor: isActive ? "#243F73" : "#DCE5F7",
-                        borderColor: isActive ? "#243F73" : "#5978B5",
+                        backgroundColor: isActive ? "var(--cd-primary)" : "var(--cd-mist)",
+                        borderColor: isActive ? "var(--cd-primary)" : "var(--cd-blue-solid)",
                       }}
                     >
                       <CheckCircle2
                         size={14}
-                        style={{ color: isActive ? "white" : "#5978B5" }}
+                        style={{ color: isActive ? "white" : "var(--cd-blue)" }}
                         strokeWidth={2.5}
                       />
                     </div>
@@ -256,7 +256,7 @@ export default function Detalhes() {
                       <p
                         className="text-sm font-semibold"
                         style={{
-                          color: isActive ? "#243F73" : "#374151",
+                          color: isActive ? "var(--cd-navy)" : "var(--cd-gray-strong)",
                           fontFamily: "var(--font-display)",
                         }}
                       >
@@ -269,7 +269,7 @@ export default function Detalhes() {
                       {event.note && (
                         <p
                           className="text-xs text-gray-600 mt-1 bg-gray-50 rounded-lg px-3 py-2 border"
-                          style={{ borderColor: "#E5E7EB" }}
+                          style={{ borderColor: "var(--cd-border-neutral)" }}
                         >
                           {event.note}
                         </p>

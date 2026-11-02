@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router"
 import { useAuth } from "../context/AuthContext"
 import { USER_ROLE_LABELS } from "../domain/auth"
 import UserMenu, { useLogout } from "./UserMenu"
+import ThemeToggle from "./ThemeToggle"
 
 interface NavLinkItem {
   label: string
@@ -24,75 +25,79 @@ export default function Nav() {
   return (
     <header
       className="bg-white border-b border-blue-100 sticky top-0 z-50"
-      style={{ borderColor: "#DCE5F7" }}
+      style={{ borderColor: "var(--cd-border)" }}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
         <Link
           to="/"
           className="flex items-center gap-2 text-navy font-extrabold text-lg tracking-tight"
-          style={{ fontFamily: "var(--font-display)", color: "#243F73" }}
+          style={{ fontFamily: "var(--font-display)", color: "var(--cd-navy)" }}
         >
           <div
             className="w-8 h-8 rounded-lg flex items-center justify-center"
-            style={{ backgroundColor: "#243F73" }}
+            style={{ backgroundColor: "var(--cd-primary)" }}
           >
             <MapPin size={16} color="white" strokeWidth={2.5} />
           </div>
           Cidade em Dia
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1">
-          {links.map((l) => (
+        <div className="flex items-center gap-1">
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-1">
+            {links.map((l) => (
+              <NavLink
+                key={l.to}
+                to={l.to}
+                end={l.to === "/"}
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active" : ""}`
+                }
+              >
+                {l.label}
+              </NavLink>
+            ))}
             <NavLink
-              key={l.to}
-              to={l.to}
-              end={l.to === "/"}
-              className={({ isActive }) =>
-                `nav-link ${isActive ? "active" : ""}`
-              }
+              to="/admin"
+              className="ml-4 text-xs font-medium px-3 py-1.5 rounded-md border"
+              style={{
+                borderColor: "var(--cd-blue-solid)",
+                color: "var(--cd-blue)",
+                fontFamily: "var(--font-display)",
+              }}
             >
-              {l.label}
+              Área da Prefeitura
             </NavLink>
-          ))}
-          <NavLink
-            to="/admin"
-            className="ml-4 text-xs font-medium px-3 py-1.5 rounded-md border"
-            style={{
-              borderColor: "#5978B5",
-              color: "#5978B5",
-              fontFamily: "var(--font-display)",
-            }}
-          >
-            Área da Prefeitura
-          </NavLink>
-          {user ? (
-            <UserMenu variant="public" />
-          ) : (
-            <NavLink
-              to="/entrar"
-              className={({ isActive }) =>
-                `nav-link ml-2 flex items-center gap-1.5 ${isActive ? "active" : ""}`
-              }
-            >
-              <LogIn size={15} />
-              Entrar
-            </NavLink>
-          )}
-        </nav>
+            {user ? (
+              <UserMenu variant="public" />
+            ) : (
+              <NavLink
+                to="/entrar"
+                className={({ isActive }) =>
+                  `nav-link ml-2 flex items-center gap-1.5 ${isActive ? "active" : ""}`
+                }
+              >
+                <LogIn size={15} />
+                Entrar
+              </NavLink>
+            )}
+          </nav>
 
-        {/* Mobile menu button */}
-        <button
-          type="button"
-          className="md:hidden p-2 rounded-md"
-          style={{ color: "#243F73" }}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-nav-menu"
-          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
-        >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+          <ThemeToggle variant="public" />
+
+          {/* Mobile menu button */}
+          <button
+            type="button"
+            className="md:hidden p-2 rounded-md"
+            style={{ color: "var(--cd-navy)" }}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav-menu"
+            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile dropdown */}
@@ -100,7 +105,7 @@ export default function Nav() {
         <div
           id="mobile-nav-menu"
           className="md:hidden bg-white border-t px-4 pb-4 pt-2 flex flex-col gap-1"
-          style={{ borderColor: "#DCE5F7" }}
+          style={{ borderColor: "var(--cd-border)" }}
         >
           {links.map((l) => (
             <NavLink
@@ -119,13 +124,13 @@ export default function Nav() {
             to="/admin"
             onClick={() => setMenuOpen(false)}
             className="nav-link text-left"
-            style={{ color: "#5978B5" }}
+            style={{ color: "var(--cd-blue)" }}
           >
             Área da Prefeitura
           </NavLink>
           <div
             className="border-t mt-1 pt-2 flex flex-col gap-1"
-            style={{ borderColor: "#DCE5F7" }}
+            style={{ borderColor: "var(--cd-border)" }}
           >
             {user ? (
               <>

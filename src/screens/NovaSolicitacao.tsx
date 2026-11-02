@@ -169,7 +169,7 @@ export default function NovaSolicitacao() {
         <label
           htmlFor={fieldId}
           className="block text-sm font-semibold mb-1.5"
-          style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+          style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
         >
           {label}{" "}
           {opts?.required ? (
@@ -190,8 +190,8 @@ export default function NovaSolicitacao() {
             aria-describedby={hasError ? errorId : undefined}
             className="w-full rounded-lg border px-3.5 py-2.5 text-sm resize-none"
             style={{
-              borderColor: errors[key] ? "#EF4444" : "#DCE5F7",
-              backgroundColor: "white",
+              borderColor: errors[key] ? "#EF4444" : "var(--cd-border)",
+              backgroundColor: "var(--cd-surface)",
             }}
           />
         ) : (
@@ -206,8 +206,8 @@ export default function NovaSolicitacao() {
             aria-describedby={hasError ? errorId : undefined}
             className="w-full rounded-lg border px-3.5 py-2.5 text-sm"
             style={{
-              borderColor: errors[key] ? "#EF4444" : "#DCE5F7",
-              backgroundColor: "white",
+              borderColor: errors[key] ? "#EF4444" : "var(--cd-border)",
+              backgroundColor: "var(--cd-surface)",
             }}
           />
         )}
@@ -228,14 +228,14 @@ export default function NovaSolicitacao() {
       <Link
         to="/"
         className="text-sm mb-6 flex items-center gap-1"
-        style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
+        style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
       >
         ← Voltar ao início
       </Link>
 
       <h1
         className="text-2xl font-bold mb-1"
-        style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+        style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
       >
         Nova solicitação
       </h1>
@@ -249,7 +249,7 @@ export default function NovaSolicitacao() {
           <label
             htmlFor="nova-solicitacao-categoria"
             className="block text-sm font-semibold mb-1.5"
-            style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
           >
             Categoria <span className="text-red-500">*</span>
           </label>
@@ -270,9 +270,9 @@ export default function NovaSolicitacao() {
               }
               className="w-full rounded-lg border px-3.5 py-2.5 text-sm appearance-none pr-10"
               style={{
-                borderColor: errors.categoryId ? "#EF4444" : "#DCE5F7",
-                backgroundColor: "white",
-                color: form.categoryId ? "#1a2535" : "#9CA3AF",
+                borderColor: errors.categoryId ? "#EF4444" : "var(--cd-border)",
+                backgroundColor: "var(--cd-surface)",
+                color: form.categoryId ? "var(--cd-ink)" : "var(--cd-faint)",
               }}
             >
               <option value="">Selecione a categoria</option>
@@ -302,7 +302,7 @@ export default function NovaSolicitacao() {
           )}
         </div>
 
-        <div className="h-px" style={{ backgroundColor: "#DCE5F7" }} />
+        <div className="h-px" style={{ backgroundColor: "var(--cd-mist)" }} />
 
         {field("Endereço", "address", {
           placeholder: "Ex: Rua das Flores, 320 — Bairro Centro",
@@ -312,7 +312,7 @@ export default function NovaSolicitacao() {
           <label
             htmlFor="nova-solicitacao-reference"
             className="block text-sm font-semibold mb-1.5"
-            style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
           >
             Ponto de referência{" "}
             <span className="text-gray-400 font-normal">(opcional)</span>
@@ -324,7 +324,7 @@ export default function NovaSolicitacao() {
             value={form.reference}
             onChange={(e) => setField("reference", e.target.value)}
             className="w-full rounded-lg border px-3.5 py-2.5 text-sm"
-            style={{ borderColor: "#DCE5F7", backgroundColor: "white" }}
+            style={{ borderColor: "var(--cd-border)", backgroundColor: "var(--cd-surface)" }}
           />
         </div>
 
@@ -339,14 +339,14 @@ export default function NovaSolicitacao() {
         <div>
           <label
             className="block text-sm font-semibold mb-1.5"
-            style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
           >
             Foto <span className="text-gray-400 font-normal">(opcional)</span>
           </label>
           {photoPreviewUrl ? (
             <div
               className="relative rounded-xl overflow-hidden border"
-              style={{ borderColor: "#DCE5F7" }}
+              style={{ borderColor: "var(--cd-border)" }}
             >
               <img
                 src={photoPreviewUrl}
@@ -367,9 +367,9 @@ export default function NovaSolicitacao() {
               type="button"
               onClick={() => fileRef.current?.click()}
               className="w-full rounded-xl border-2 border-dashed py-8 flex flex-col items-center gap-2 transition-colors hover:border-blue-mid"
-              style={{ borderColor: "#DCE5F7" }}
+              style={{ borderColor: "var(--cd-border)" }}
             >
-              <Upload size={24} style={{ color: "#5978B5" }} />
+              <Upload size={24} style={{ color: "var(--cd-blue)" }} />
               <span className="text-sm text-gray-500">
                 Clique para enviar uma foto
               </span>
@@ -392,7 +392,7 @@ export default function NovaSolicitacao() {
           )}
         </div>
 
-        <div className="h-px" style={{ backgroundColor: "#DCE5F7" }} />
+        <div className="h-px" style={{ backgroundColor: "var(--cd-mist)" }} />
 
         {field("Nome completo", "name", { placeholder: "Seu nome" })}
         {field("E-mail", "email", {
@@ -403,7 +403,7 @@ export default function NovaSolicitacao() {
         {/* Privacy */}
         <div
           className="rounded-xl p-4"
-          style={{ backgroundColor: "#F6F8FC", border: "1px solid #DCE5F7" }}
+          style={{ backgroundColor: "var(--cd-page)", border: "1px solid var(--cd-border)" }}
         >
           <p className="text-xs text-gray-500 mb-3 leading-relaxed">
             Os dados informados serão utilizados para identificação e
@@ -426,11 +426,11 @@ export default function NovaSolicitacao() {
                   : undefined
               }
               className="mt-0.5 rounded border-gray-300 accent-navy"
-              style={{ accentColor: "#243F73" }}
+              style={{ accentColor: "var(--cd-primary)" }}
             />
             <span
               className="text-sm font-medium"
-              style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+              style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
             >
               Li e concordo com o uso dos meus dados para esta solicitação.
             </span>
@@ -448,10 +448,10 @@ export default function NovaSolicitacao() {
         {submitError && (
           <div
             className="rounded-xl border p-3 flex items-center gap-2"
-            style={{ borderColor: "#FECACA", backgroundColor: "#FEF2F2" }}
+            style={{ borderColor: "var(--cd-danger-border)", backgroundColor: "var(--cd-danger-bg)" }}
           >
-            <AlertCircle size={14} style={{ color: "#DC2626" }} />
-            <p className="text-xs" style={{ color: "#DC2626" }}>
+            <AlertCircle size={14} style={{ color: "var(--cd-danger)" }} />
+            <p className="text-xs" style={{ color: "var(--cd-danger)" }}>
               {submitError}
             </p>
           </div>
@@ -462,8 +462,8 @@ export default function NovaSolicitacao() {
             to="/"
             className="flex-1 py-3 rounded-lg border text-sm font-semibold transition-all hover:bg-gray-50 text-center"
             style={{
-              borderColor: "#DCE5F7",
-              color: "#5978B5",
+              borderColor: "var(--cd-border)",
+              color: "var(--cd-blue)",
               fontFamily: "var(--font-display)",
             }}
           >
@@ -474,7 +474,7 @@ export default function NovaSolicitacao() {
             disabled={submitting}
             className="flex-1 py-3 rounded-lg text-sm font-semibold transition-all hover:opacity-90 disabled:opacity-60"
             style={{
-              backgroundColor: "#243F73",
+              backgroundColor: "var(--cd-primary)",
               color: "white",
               fontFamily: "var(--font-display)",
             }}

@@ -37,6 +37,7 @@ import {
 import { formatDateOnlyPtBR } from "../utils/date"
 import { RequestServiceError, requestService } from "../services/requestService"
 import StatusBadge from "../components/StatusBadge"
+import ThemeToggle from "../components/ThemeToggle"
 import UserMenu, { useLogout } from "../components/UserMenu"
 
 const STATUS_FILTER_OPTIONS: Array<{
@@ -93,32 +94,32 @@ export default function AdminDashboard() {
       label: "Aguardando atendimento",
       val: analytics ? analytics.kpis.aguardandoAtendimento : "—",
       sub: "solicitações recebidas",
-      color: "#243F73",
-      bg: "#DCE5F7",
+      color: "var(--cd-navy)",
+      bg: "var(--cd-mist)",
       icon: ClipboardList,
     },
     {
       label: "Em atendimento",
       val: analytics ? analytics.kpis.emAtendimento : "—",
       sub: "em andamento",
-      color: "#7C3AED",
-      bg: "#EDE9FE",
+      color: "var(--cd-purple)",
+      bg: "var(--cd-purple-tint)",
       icon: LayoutDashboard,
     },
     {
       label: "Resolvidas este mês",
       val: analytics ? analytics.kpis.resolvidasNoMes : "—",
       sub: "no mês atual",
-      color: "#059669",
-      bg: "#D1FAE5",
+      color: "var(--cd-green)",
+      bg: "var(--cd-green-tint)",
       icon: CheckCircle2,
     },
     {
       label: "Total de solicitações",
       val: analytics ? analytics.kpis.totalSolicitacoes : "—",
       sub: "registros cadastrados",
-      color: "#D97706",
-      bg: "#FEF3C7",
+      color: "var(--cd-amber)",
+      bg: "var(--cd-amber-tint-strong)",
       icon: FileStack,
     },
   ]
@@ -155,11 +156,11 @@ export default function AdminDashboard() {
   }, [currentPage, effectivePage])
 
   return (
-    <div className="flex min-h-screen" style={{ backgroundColor: "#F6F8FC" }}>
+    <div className="flex min-h-screen" style={{ backgroundColor: "var(--cd-page)" }}>
       {/* Sidebar */}
       <aside
         className="hidden md:flex flex-col w-56 border-r shrink-0"
-        style={{ backgroundColor: "#243F73", borderColor: "#1d3460" }}
+        style={{ backgroundColor: "var(--cd-brand)", borderColor: "#1d3460" }}
       >
         <div className="px-5 py-5 border-b" style={{ borderColor: "#1d3460" }}>
           <div className="flex items-center gap-2">
@@ -202,6 +203,7 @@ export default function AdminDashboard() {
         </nav>
 
         <div className="p-3 border-t" style={{ borderColor: "#1d3460" }}>
+          <ThemeToggle variant="admin" />
           <UserMenu variant="admin" />
         </div>
       </aside>
@@ -211,22 +213,25 @@ export default function AdminDashboard() {
         {/* Top bar */}
         <header
           className="bg-white border-b px-6 py-4 flex items-center justify-between"
-          style={{ borderColor: "#DCE5F7" }}
+          style={{ borderColor: "var(--cd-border)" }}
         >
           <h1
             className="text-lg font-bold"
-            style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
           >
             Dashboard
           </h1>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="md:hidden text-sm font-medium"
-            style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
-          >
-            Sair
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            <ThemeToggle variant="public" />
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="text-sm font-medium"
+              style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
+            >
+              Sair
+            </button>
+          </div>
         </header>
 
         <div className="p-4 sm:p-6 max-w-5xl">
@@ -236,7 +241,7 @@ export default function AdminDashboard() {
               <div
                 key={kpi.label}
                 className="bg-white rounded-xl border p-4"
-                style={{ borderColor: "#DCE5F7" }}
+                style={{ borderColor: "var(--cd-border)" }}
               >
                 <div
                   className="w-9 h-9 rounded-lg flex items-center justify-center mb-3"
@@ -256,7 +261,7 @@ export default function AdminDashboard() {
                 <p
                   className="text-xs font-semibold"
                   style={{
-                    color: "#1a2535",
+                    color: "var(--cd-ink)",
                     fontFamily: "var(--font-display)",
                   }}
                 >
@@ -272,11 +277,11 @@ export default function AdminDashboard() {
             {/* Bar chart */}
             <div
               className="bg-white rounded-xl border p-4 lg:col-span-3"
-              style={{ borderColor: "#DCE5F7" }}
+              style={{ borderColor: "var(--cd-border)" }}
             >
               <h2
                 className="text-sm font-semibold mb-4"
-                style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+                style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
               >
                 Solicitações por dia (últimos 7 dias)
               </h2>
@@ -297,12 +302,12 @@ export default function AdminDashboard() {
                   >
                     <XAxis
                       dataKey="day"
-                      tick={{ fontSize: 11, fill: "#9CA3AF" }}
+                      tick={{ fontSize: 11, fill: "var(--cd-faint)" }}
                       axisLine={false}
                       tickLine={false}
                     />
                     <YAxis
-                      tick={{ fontSize: 11, fill: "#9CA3AF" }}
+                      tick={{ fontSize: 11, fill: "var(--cd-faint)" }}
                       axisLine={false}
                       tickLine={false}
                       width={28}
@@ -310,22 +315,23 @@ export default function AdminDashboard() {
                     <Tooltip
                       contentStyle={{
                         borderRadius: 8,
-                        border: "1px solid #DCE5F7",
+                        border: "1px solid var(--cd-border)",
+                        backgroundColor: "var(--cd-surface)",
                         fontSize: 12,
                       }}
-                      itemStyle={{ color: "#243F73" }}
-                      cursor={{ fill: "#F6F8FC" }}
+                      itemStyle={{ color: "var(--cd-navy)" }}
+                      cursor={{ fill: "var(--cd-page)" }}
                     />
                     <Bar
                       dataKey="registradas"
                       name="Registradas"
-                      fill="#5978B5"
+                      fill="var(--cd-blue-solid)"
                       radius={[4, 4, 0, 0]}
                     />
                     <Bar
                       dataKey="resolvidas"
                       name="Resolvidas"
-                      fill="#DCE5F7"
+                      fill="var(--cd-chart-bar-2)"
                       radius={[4, 4, 0, 0]}
                     />
                   </BarChart>
@@ -336,11 +342,11 @@ export default function AdminDashboard() {
             {/* Pie chart */}
             <div
               className="bg-white rounded-xl border p-4 lg:col-span-2"
-              style={{ borderColor: "#DCE5F7" }}
+              style={{ borderColor: "var(--cd-border)" }}
             >
               <h2
                 className="text-sm font-semibold mb-4"
-                style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+                style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
               >
                 Por categoria
               </h2>
@@ -365,6 +371,7 @@ export default function AdminDashboard() {
                         innerRadius={45}
                         outerRadius={70}
                         paddingAngle={3}
+                        stroke="var(--cd-surface)"
                       >
                         {analytics?.categoryData.map((_, i) => (
                           <Cell
@@ -376,7 +383,8 @@ export default function AdminDashboard() {
                       <Tooltip
                         contentStyle={{
                           borderRadius: 8,
-                          border: "1px solid #DCE5F7",
+                          border: "1px solid var(--cd-border)",
+                          backgroundColor: "var(--cd-surface)",
                           fontSize: 11,
                         }}
                       />
@@ -395,7 +403,7 @@ export default function AdminDashboard() {
                         <span className="text-gray-500 truncate">{d.name}</span>
                         <span
                           className="ml-auto font-semibold"
-                          style={{ color: "#243F73" }}
+                          style={{ color: "var(--cd-navy)" }}
                         >
                           {d.value}
                         </span>
@@ -410,15 +418,15 @@ export default function AdminDashboard() {
           {/* Filters + Table */}
           <div
             className="bg-white rounded-xl border"
-            style={{ borderColor: "#DCE5F7" }}
+            style={{ borderColor: "var(--cd-border)" }}
           >
             <div
               className="px-5 py-4 border-b flex items-center justify-between flex-wrap gap-3"
-              style={{ borderColor: "#DCE5F7" }}
+              style={{ borderColor: "var(--cd-border)" }}
             >
               <h2
                 className="text-sm font-semibold"
-                style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+                style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
               >
                 Solicitações recentes
               </h2>
@@ -436,7 +444,7 @@ export default function AdminDashboard() {
                     aria-label="Filtrar por status"
                     className="text-xs rounded-lg border pl-3 pr-7 py-1.5 appearance-none"
                     style={{
-                      borderColor: "#DCE5F7",
+                      borderColor: "var(--cd-border)",
                       fontFamily: "var(--font-display)",
                     }}
                   >
@@ -464,7 +472,7 @@ export default function AdminDashboard() {
                     aria-label="Filtrar por categoria"
                     className="text-xs rounded-lg border pl-3 pr-7 py-1.5 appearance-none"
                     style={{
-                      borderColor: "#DCE5F7",
+                      borderColor: "var(--cd-border)",
                       fontFamily: "var(--font-display)",
                     }}
                   >
@@ -491,7 +499,7 @@ export default function AdminDashboard() {
             >
               <table className="w-full text-sm min-w-160">
                 <thead>
-                  <tr style={{ backgroundColor: "#F6F8FC" }}>
+                  <tr style={{ backgroundColor: "var(--cd-page)" }}>
                     {[
                       "Protocolo",
                       "Categoria",
@@ -504,7 +512,7 @@ export default function AdminDashboard() {
                         key={h}
                         className="text-left px-4 py-3 text-xs font-semibold text-gray-600 border-b"
                         style={{
-                          borderColor: "#DCE5F7",
+                          borderColor: "var(--cd-border)",
                           fontFamily: "var(--font-display)",
                         }}
                       >
@@ -528,7 +536,7 @@ export default function AdminDashboard() {
                       <td
                         colSpan={6}
                         className="px-4 py-8 text-center text-sm"
-                        style={{ color: "#DC2626" }}
+                        style={{ color: "var(--cd-danger)" }}
                       >
                         {loadError}
                       </td>
@@ -548,7 +556,7 @@ export default function AdminDashboard() {
                       <tr key={req.id}>
                         <td
                           className="px-4 py-3 font-mono text-xs font-medium"
-                          style={{ color: "#243F73" }}
+                          style={{ color: "var(--cd-navy)" }}
                         >
                           {req.protocol}
                         </td>
@@ -569,7 +577,7 @@ export default function AdminDashboard() {
                             to={`/admin/solicitacao/${req.protocol}`}
                             className="text-xs font-medium flex items-center gap-1"
                             style={{
-                              color: "#5978B5",
+                              color: "var(--cd-blue)",
                               fontFamily: "var(--font-display)",
                             }}
                           >
@@ -586,7 +594,7 @@ export default function AdminDashboard() {
             {!loading && !loadError && totalFiltered > 0 ? (
               <div
                 className="px-5 py-3 border-t flex items-center justify-between flex-wrap gap-3"
-                style={{ borderColor: "#DCE5F7" }}
+                style={{ borderColor: "var(--cd-border)" }}
               >
                 <p className="text-xs text-gray-500">
                   Mostrando {firstIndex + 1}–{lastIndex} de {totalFiltered}
@@ -599,8 +607,8 @@ export default function AdminDashboard() {
                       onClick={() => setCurrentPage(effectivePage - 1)}
                       className="text-xs font-medium px-3 py-1.5 rounded-lg border transition-colors enabled:cursor-pointer enabled:hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
                       style={{
-                        borderColor: "#DCE5F7",
-                        color: "#5978B5",
+                        borderColor: "var(--cd-border)",
+                        color: "var(--cd-blue)",
                         fontFamily: "var(--font-display)",
                       }}
                     >
@@ -609,7 +617,7 @@ export default function AdminDashboard() {
                     <p
                       className="text-xs"
                       style={{
-                        color: "#243F73",
+                        color: "var(--cd-navy)",
                         fontFamily: "var(--font-display)",
                       }}
                     >
@@ -621,8 +629,8 @@ export default function AdminDashboard() {
                       onClick={() => setCurrentPage(effectivePage + 1)}
                       className="text-xs font-medium px-3 py-1.5 rounded-lg border transition-colors enabled:cursor-pointer enabled:hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
                       style={{
-                        borderColor: "#DCE5F7",
-                        color: "#5978B5",
+                        borderColor: "var(--cd-border)",
+                        color: "var(--cd-blue)",
                         fontFamily: "var(--font-display)",
                       }}
                     >

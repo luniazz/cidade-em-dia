@@ -9,6 +9,21 @@
     />
     <meta name="robots" content="noindex,nofollow" />
     <title>Cidade em Dia</title>
+    <script>
+      // Aplica o tema antes do primeiro paint, evitando flash do tema errado.
+      // Mesma regra de resolveInitialTheme (src/domain/theme.ts) e mesma chave
+      // do themeService; o ThemeProvider assume o controle depois.
+      try {
+        var savedTheme = localStorage.getItem("cidade-em-dia:theme:v1")
+        var isDark =
+          savedTheme === "dark" ||
+          (savedTheme !== "light" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        if (isDark) document.documentElement.classList.add("dark")
+      } catch (error) {
+        // Sem acesso ao armazenamento: o ThemeProvider aplica o tema ao iniciar.
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

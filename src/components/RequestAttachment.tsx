@@ -84,7 +84,7 @@ export default function RequestAttachment({
     ) : (
       <div
         className="mb-6 rounded-xl overflow-hidden border"
-        style={{ borderColor: "#DCE5F7" }}
+        style={{ borderColor: "var(--cd-border)" }}
       >
         {children}
       </div>
@@ -129,7 +129,7 @@ export default function RequestAttachment({
             className={imgClassName}
           />,
         )}
-      <p className={noticeClassName} style={{ color: "#9CA3AF" }}>
+      <p className={noticeClassName} style={{ color: "var(--cd-faint)" }}>
         <AlertCircle size={12} />
         Não foi possível consultar a foto armazenada localmente.
       </p>

@@ -42,14 +42,14 @@ export default function Acompanhar() {
       <Link
         to="/"
         className="text-sm mb-6 flex items-center gap-1"
-        style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
+        style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
       >
         ← Voltar ao início
       </Link>
 
       <h1
         className="text-2xl font-bold mb-1"
-        style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+        style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
       >
         Acompanhar solicitação
       </h1>
@@ -74,7 +74,7 @@ export default function Acompanhar() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="w-full rounded-lg border pl-10 pr-4 py-2.5 text-sm"
-              style={{ borderColor: "#DCE5F7", backgroundColor: "white" }}
+              style={{ borderColor: "var(--cd-border)", backgroundColor: "var(--cd-surface)" }}
             />
           </div>
           <button
@@ -82,7 +82,7 @@ export default function Acompanhar() {
             disabled={searching}
             className="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all hover:opacity-90 disabled:opacity-60"
             style={{
-              backgroundColor: "#243F73",
+              backgroundColor: "var(--cd-primary)",
               color: "white",
               fontFamily: "var(--font-display)",
             }}
@@ -112,18 +112,18 @@ export default function Acompanhar() {
       {error && (
         <div
           className="mt-8 rounded-xl border p-6 flex flex-col items-center text-center gap-3"
-          style={{ borderColor: "#FECACA", backgroundColor: "#FEF2F2" }}
+          style={{ borderColor: "var(--cd-danger-border)", backgroundColor: "var(--cd-danger-bg)" }}
         >
           <div
             className="w-12 h-12 rounded-full flex items-center justify-center"
-            style={{ backgroundColor: "#FEE2E2" }}
+            style={{ backgroundColor: "var(--cd-danger-tint)" }}
           >
-            <AlertCircle size={24} style={{ color: "#DC2626" }} />
+            <AlertCircle size={24} style={{ color: "var(--cd-danger)" }} />
           </div>
           <div>
             <p
               className="font-semibold text-sm mb-1"
-              style={{ color: "#DC2626", fontFamily: "var(--font-display)" }}
+              style={{ color: "var(--cd-danger)", fontFamily: "var(--font-display)" }}
             >
               Não foi possível consultar
             </p>
@@ -136,18 +136,18 @@ export default function Acompanhar() {
       {!searching && !error && searched && result === null && (
         <div
           className="mt-8 rounded-xl border p-6 flex flex-col items-center text-center gap-3"
-          style={{ borderColor: "#FECACA", backgroundColor: "#FEF2F2" }}
+          style={{ borderColor: "var(--cd-danger-border)", backgroundColor: "var(--cd-danger-bg)" }}
         >
           <div
             className="w-12 h-12 rounded-full flex items-center justify-center"
-            style={{ backgroundColor: "#FEE2E2" }}
+            style={{ backgroundColor: "var(--cd-danger-tint)" }}
           >
-            <AlertCircle size={24} style={{ color: "#DC2626" }} />
+            <AlertCircle size={24} style={{ color: "var(--cd-danger)" }} />
           </div>
           <div>
             <p
               className="font-semibold text-sm mb-1"
-              style={{ color: "#DC2626", fontFamily: "var(--font-display)" }}
+              style={{ color: "var(--cd-danger)", fontFamily: "var(--font-display)" }}
             >
               Protocolo não encontrado
             </p>
@@ -161,22 +161,22 @@ export default function Acompanhar() {
       {!searching && result && (
         <div
           className="mt-8 rounded-xl border overflow-hidden"
-          style={{ borderColor: "#DCE5F7" }}
+          style={{ borderColor: "var(--cd-border)" }}
         >
           <div
             className="px-5 py-4 flex items-center justify-between"
-            style={{ backgroundColor: "#F6F8FC" }}
+            style={{ backgroundColor: "var(--cd-page)" }}
           >
             <div>
               <p
                 className="text-xs font-semibold uppercase tracking-widest mb-0.5"
-                style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
+                style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
               >
                 Protocolo
               </p>
               <p
                 className="text-lg font-bold"
-                style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+                style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
               >
                 {result.protocol}
               </p>
@@ -204,7 +204,7 @@ export default function Acompanhar() {
                 <span
                   className="text-sm font-medium text-right max-w-[55%]"
                   style={{
-                    color: "#1a2535",
+                    color: "var(--cd-ink)",
                     fontFamily: "var(--font-display)",
                   }}
                 >
@@ -214,11 +214,11 @@ export default function Acompanhar() {
             ))}
           </div>
 
-          <div className="px-5 py-4" style={{ backgroundColor: "#F6F8FC" }}>
+          <div className="px-5 py-4" style={{ backgroundColor: "var(--cd-page)" }}>
             <Link
               to={`/solicitacao/${result.protocol}`}
               className="flex items-center gap-2 text-sm font-semibold"
-              style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+              style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
             >
               Ver detalhes completos <ArrowRight size={14} />
             </Link>

@@ -57,15 +57,15 @@ export default function App() {
     return (
       <div
         className="min-h-screen flex items-center justify-center px-4"
-        style={{ backgroundColor: "#F6F8FC" }}
+        style={{ backgroundColor: "var(--cd-page)" }}
       >
         <div
           className="max-w-md text-center rounded-xl border p-6"
-          style={{ borderColor: "#FECACA", backgroundColor: "#FEF2F2" }}
+          style={{ borderColor: "var(--cd-danger-border)", backgroundColor: "var(--cd-danger-bg)" }}
         >
           <p
             className="font-semibold text-sm mb-1"
-            style={{ color: "#DC2626", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-danger)", fontFamily: "var(--font-display)" }}
           >
             Não foi possível carregar o Cidade em Dia
           </p>
@@ -81,11 +81,11 @@ export default function App() {
     return (
       <div
         className="min-h-screen flex items-center justify-center"
-        style={{ backgroundColor: "#F6F8FC" }}
+        style={{ backgroundColor: "var(--cd-page)" }}
       >
         <p
           className="text-sm"
-          style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
+          style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
         >
           Carregando...
         </p>
@@ -96,7 +96,7 @@ export default function App() {
   return (
     <div
       className="min-h-screen flex flex-col"
-      style={{ backgroundColor: "#F6F8FC" }}
+      style={{ backgroundColor: "var(--cd-page)" }}
     >
       <ScrollToTop />
       {!isAdmin && <Nav />}
@@ -125,7 +125,7 @@ export default function App() {
       {!isAdmin && (
         <footer
           className="mt-auto border-t py-6"
-          style={{ borderColor: "#DCE5F7", backgroundColor: "white" }}
+          style={{ borderColor: "var(--cd-border)", backgroundColor: "var(--cd-surface)" }}
         >
           <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
             <span>© 2026 Cidade em Dia</span>

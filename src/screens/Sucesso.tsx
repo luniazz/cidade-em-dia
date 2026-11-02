@@ -146,13 +146,13 @@ export default function Sucesso() {
       <main className="max-w-lg mx-auto px-4 sm:px-6 py-16 flex flex-col items-center text-center">
         <div
           className="w-16 h-16 rounded-full flex items-center justify-center mb-5"
-          style={{ backgroundColor: "#FEE2E2" }}
+          style={{ backgroundColor: "var(--cd-danger-tint)" }}
         >
-          <AlertCircle size={32} style={{ color: "#DC2626" }} strokeWidth={2} />
+          <AlertCircle size={32} style={{ color: "var(--cd-danger)" }} strokeWidth={2} />
         </div>
         <h1
           className="text-2xl font-bold mb-1"
-          style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+          style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
         >
           {title}
         </h1>
@@ -162,7 +162,7 @@ export default function Sucesso() {
             to="/acompanhar"
             className="flex-1 py-3 rounded-lg text-sm font-semibold text-center"
             style={{
-              backgroundColor: "#243F73",
+              backgroundColor: "var(--cd-primary)",
               color: "white",
               fontFamily: "var(--font-display)",
             }}
@@ -173,8 +173,8 @@ export default function Sucesso() {
             to="/"
             className="flex-1 py-3 rounded-lg border text-sm font-semibold text-center"
             style={{
-              borderColor: "#DCE5F7",
-              color: "#5978B5",
+              borderColor: "var(--cd-border)",
+              color: "var(--cd-blue)",
               fontFamily: "var(--font-display)",
             }}
           >
@@ -192,14 +192,14 @@ export default function Sucesso() {
     <main className="max-w-lg mx-auto px-4 sm:px-6 py-16 flex flex-col items-center text-center">
       <div
         className="w-16 h-16 rounded-full flex items-center justify-center mb-5"
-        style={{ backgroundColor: "#D1FAE5" }}
+        style={{ backgroundColor: "var(--cd-green-tint)" }}
       >
-        <CheckCircle2 size={32} style={{ color: "#059669" }} strokeWidth={2} />
+        <CheckCircle2 size={32} style={{ color: "var(--cd-green)" }} strokeWidth={2} />
       </div>
 
       <h1
         className="text-2xl font-bold mb-1"
-        style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+        style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
       >
         Solicitação registrada!
       </h1>
@@ -211,10 +211,10 @@ export default function Sucesso() {
       {photoSaveFailed && (
         <div
           className="w-full rounded-xl border p-3 mb-6 flex items-center gap-2"
-          style={{ borderColor: "#FDE68A", backgroundColor: "#FFFBEB" }}
+          style={{ borderColor: "var(--cd-amber-border)", backgroundColor: "var(--cd-amber-tint)" }}
         >
-          <AlertCircle size={14} style={{ color: "#D97706" }} />
-          <p className="text-xs text-left" style={{ color: "#92400E" }}>
+          <AlertCircle size={14} style={{ color: "var(--cd-amber)" }} />
+          <p className="text-xs text-left" style={{ color: "var(--cd-amber-ink)" }}>
             Sua solicitação foi registrada, mas não foi possível salvar a foto.
             Guarde o protocolo para acompanhamento.
           </p>
@@ -224,18 +224,18 @@ export default function Sucesso() {
       {/* Protocol box */}
       <div
         className="w-full rounded-xl border p-6 mb-8"
-        style={{ backgroundColor: "#F6F8FC", borderColor: "#DCE5F7" }}
+        style={{ backgroundColor: "var(--cd-page)", borderColor: "var(--cd-border)" }}
       >
         <p
           className="text-xs font-semibold uppercase tracking-widest mb-2"
-          style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
+          style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
         >
           Número de protocolo
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <span
             className="text-2xl sm:text-3xl font-extrabold tracking-tight break-all"
-            style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
           >
             {found.protocol}
           </span>
@@ -244,9 +244,9 @@ export default function Sucesso() {
             onClick={copy}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm font-medium transition-all"
             style={{
-              borderColor: "#DCE5F7",
-              color: copied ? "#059669" : "#5978B5",
-              backgroundColor: copied ? "#D1FAE5" : "white",
+              borderColor: "var(--cd-border)",
+              color: copied ? "var(--cd-green)" : "var(--cd-blue)",
+              backgroundColor: copied ? "var(--cd-green-tint)" : "var(--cd-surface)",
               fontFamily: "var(--font-display)",
             }}
           >
@@ -259,7 +259,7 @@ export default function Sucesso() {
       {/* Summary */}
       <div
         className="w-full rounded-xl border divide-y text-left mb-8"
-        style={{ borderColor: "#DCE5F7" }}
+        style={{ borderColor: "var(--cd-border)" }}
       >
         {[
           {
@@ -279,7 +279,7 @@ export default function Sucesso() {
             <span className="text-xs text-gray-500">{row.label}</span>
             <span
               className="text-sm font-medium text-right max-w-[55%]"
-              style={{ color: "#1a2535", fontFamily: "var(--font-display)" }}
+              style={{ color: "var(--cd-ink)", fontFamily: "var(--font-display)" }}
             >
               {row.val}
             </span>
@@ -296,7 +296,7 @@ export default function Sucesso() {
           to={`/solicitacao/${found.protocol}`}
           className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-semibold"
           style={{
-            backgroundColor: "#243F73",
+            backgroundColor: "var(--cd-primary)",
             color: "white",
             fontFamily: "var(--font-display)",
           }}
@@ -308,8 +308,8 @@ export default function Sucesso() {
           to="/"
           className="flex-1 py-3 rounded-lg border text-sm font-semibold text-center"
           style={{
-            borderColor: "#DCE5F7",
-            color: "#5978B5",
+            borderColor: "var(--cd-border)",
+            color: "var(--cd-blue)",
             fontFamily: "var(--font-display)",
           }}
         >

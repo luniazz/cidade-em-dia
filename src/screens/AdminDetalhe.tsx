@@ -20,6 +20,7 @@ import { formatDateOnlyPtBR, formatDateTimePtBR } from "../utils/date"
 import { RequestServiceError, requestService } from "../services/requestService"
 import StatusBadge from "../components/StatusBadge"
 import RequestAttachment from "../components/RequestAttachment"
+import ThemeToggle from "../components/ThemeToggle"
 import UserMenu from "../components/UserMenu"
 
 type AsyncLoadStatus = "loading" | "not-found" | "error" | "found"
@@ -118,16 +119,16 @@ export default function AdminDetalhe() {
             : null
 
     return (
-      <div className="flex min-h-screen" style={{ backgroundColor: "#F6F8FC" }}>
+      <div className="flex min-h-screen" style={{ backgroundColor: "var(--cd-page)" }}>
         <div className="flex-1 min-w-0">
           <header
             className="bg-white border-b px-6 py-4 flex items-center gap-4"
-            style={{ borderColor: "#DCE5F7" }}
+            style={{ borderColor: "var(--cd-border)" }}
           >
             <Link
               to="/admin"
               className="flex items-center gap-1.5 text-sm font-medium"
-              style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
+              style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
             >
               <ArrowLeft size={16} />
               Painel
@@ -141,19 +142,19 @@ export default function AdminDetalhe() {
             ) : (
               <div
                 className="rounded-xl border p-6 flex flex-col items-center text-center gap-3"
-                style={{ borderColor: "#FECACA", backgroundColor: "#FEF2F2" }}
+                style={{ borderColor: "var(--cd-danger-border)", backgroundColor: "var(--cd-danger-bg)" }}
               >
                 <div
                   className="w-12 h-12 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: "#FEE2E2" }}
+                  style={{ backgroundColor: "var(--cd-danger-tint)" }}
                 >
-                  <AlertCircle size={24} style={{ color: "#DC2626" }} />
+                  <AlertCircle size={24} style={{ color: "var(--cd-danger)" }} />
                 </div>
                 <div>
                   <p
                     className="font-semibold text-sm mb-1"
                     style={{
-                      color: "#DC2626",
+                      color: "var(--cd-danger)",
                       fontFamily: "var(--font-display)",
                     }}
                   >
@@ -174,11 +175,11 @@ export default function AdminDetalhe() {
   }
 
   return (
-    <div className="flex min-h-screen" style={{ backgroundColor: "#F6F8FC" }}>
+    <div className="flex min-h-screen" style={{ backgroundColor: "var(--cd-page)" }}>
       {/* Sidebar */}
       <aside
         className="hidden md:flex flex-col w-56 border-r shrink-0"
-        style={{ backgroundColor: "#243F73", borderColor: "#1d3460" }}
+        style={{ backgroundColor: "var(--cd-brand)", borderColor: "#1d3460" }}
       >
         <div className="px-5 py-5 border-b" style={{ borderColor: "#1d3460" }}>
           <div className="flex items-center gap-2">
@@ -213,6 +214,7 @@ export default function AdminDetalhe() {
           ))}
         </nav>
         <div className="p-3 border-t" style={{ borderColor: "#1d3460" }}>
+          <ThemeToggle variant="admin" />
           <UserMenu variant="admin" />
         </div>
       </aside>
@@ -221,12 +223,12 @@ export default function AdminDetalhe() {
         {/* Header */}
         <header
           className="bg-white border-b px-6 py-4 flex items-center gap-4"
-          style={{ borderColor: "#DCE5F7" }}
+          style={{ borderColor: "var(--cd-border)" }}
         >
           <Link
             to="/admin"
             className="flex items-center gap-1.5 text-sm font-medium"
-            style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
           >
             <ArrowLeft size={16} />
             Painel
@@ -234,10 +236,13 @@ export default function AdminDetalhe() {
           <span className="text-gray-300">/</span>
           <h1
             className="text-sm font-bold"
-            style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
           >
             {request.protocol}
           </h1>
+          <div className="md:hidden ml-auto">
+            <ThemeToggle variant="public" />
+          </div>
         </header>
 
         <div className="p-4 sm:p-6 max-w-4xl grid grid-cols-1 lg:grid-cols-5 gap-6">
@@ -246,16 +251,16 @@ export default function AdminDetalhe() {
             {/* Request info */}
             <div
               className="bg-white rounded-xl border"
-              style={{ borderColor: "#DCE5F7" }}
+              style={{ borderColor: "var(--cd-border)" }}
             >
               <div
                 className="px-5 py-4 border-b flex items-center justify-between"
-                style={{ borderColor: "#DCE5F7" }}
+                style={{ borderColor: "var(--cd-border)" }}
               >
                 <h2
                   className="text-sm font-semibold"
                   style={{
-                    color: "#243F73",
+                    color: "var(--cd-navy)",
                     fontFamily: "var(--font-display)",
                   }}
                 >
@@ -295,7 +300,7 @@ export default function AdminDetalhe() {
                     <span
                       className="text-xs sm:col-span-2"
                       style={{
-                        color: "#1a2535",
+                        color: "var(--cd-ink)",
                         fontFamily: "var(--font-display)",
                       }}
                     >
@@ -309,16 +314,16 @@ export default function AdminDetalhe() {
             {/* Citizen data */}
             <div
               className="bg-white rounded-xl border"
-              style={{ borderColor: "#DCE5F7" }}
+              style={{ borderColor: "var(--cd-border)" }}
             >
               <div
                 className="px-5 py-4 border-b"
-                style={{ borderColor: "#DCE5F7" }}
+                style={{ borderColor: "var(--cd-border)" }}
               >
                 <h2
                   className="text-sm font-semibold"
                   style={{
-                    color: "#243F73",
+                    color: "var(--cd-navy)",
                     fontFamily: "var(--font-display)",
                   }}
                 >
@@ -338,7 +343,7 @@ export default function AdminDetalhe() {
                     <span
                       className="text-xs sm:col-span-2"
                       style={{
-                        color: "#1a2535",
+                        color: "var(--cd-ink)",
                         fontFamily: "var(--font-display)",
                       }}
                     >
@@ -352,16 +357,16 @@ export default function AdminDetalhe() {
             {/* History */}
             <div
               className="bg-white rounded-xl border"
-              style={{ borderColor: "#DCE5F7" }}
+              style={{ borderColor: "var(--cd-border)" }}
             >
               <div
                 className="px-5 py-4 border-b"
-                style={{ borderColor: "#DCE5F7" }}
+                style={{ borderColor: "var(--cd-border)" }}
               >
                 <h2
                   className="text-sm font-semibold"
                   style={{
-                    color: "#243F73",
+                    color: "var(--cd-navy)",
                     fontFamily: "var(--font-display)",
                   }}
                 >
@@ -374,13 +379,13 @@ export default function AdminDetalhe() {
                     <div key={i} className="flex items-start gap-3">
                       <div
                         className="w-2 h-2 rounded-full mt-1.5 shrink-0"
-                        style={{ backgroundColor: "#5978B5" }}
+                        style={{ backgroundColor: "var(--cd-blue-solid)" }}
                       />
                       <div>
                         <p
                           className="text-xs font-semibold"
                           style={{
-                            color: "#243F73",
+                            color: "var(--cd-navy)",
                             fontFamily: "var(--font-display)",
                           }}
                         >
@@ -406,11 +411,11 @@ export default function AdminDetalhe() {
           <div className="lg:col-span-2 flex flex-col gap-4">
             <div
               className="bg-white rounded-xl border p-5"
-              style={{ borderColor: "#DCE5F7" }}
+              style={{ borderColor: "var(--cd-border)" }}
             >
               <h2
                 className="text-sm font-semibold mb-4"
-                style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+                style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
               >
                 Atualizar status
               </h2>
@@ -433,7 +438,7 @@ export default function AdminDetalhe() {
                     }
                   }}
                   className="w-full rounded-lg border px-3.5 py-2.5 text-sm appearance-none pr-10"
-                  style={{ borderColor: "#DCE5F7", backgroundColor: "white" }}
+                  style={{ borderColor: "var(--cd-border)", backgroundColor: "var(--cd-surface)" }}
                 >
                   {REQUEST_STATUSES.map((s) => (
                     <option key={s} value={s}>
@@ -461,7 +466,7 @@ export default function AdminDetalhe() {
                 onChange={(e) => setNote(e.target.value)}
                 placeholder="Registre observações para a equipe..."
                 className="w-full rounded-lg border px-3.5 py-2.5 text-sm resize-none mb-4"
-                style={{ borderColor: "#DCE5F7" }}
+                style={{ borderColor: "var(--cd-border)" }}
               />
 
               <div aria-live="polite">
@@ -471,7 +476,7 @@ export default function AdminDetalhe() {
                   disabled={saving}
                   className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition-all disabled:opacity-60"
                   style={{
-                    backgroundColor: saved ? "#059669" : "#243F73",
+                    backgroundColor: saved ? "#059669" : "var(--cd-primary)",
                     color: "white",
                     fontFamily: "var(--font-display)",
                   }}
@@ -489,7 +494,7 @@ export default function AdminDetalhe() {
                   )}
                 </button>
                 {saveError && (
-                  <p className="text-xs mt-2" style={{ color: "#DC2626" }}>
+                  <p className="text-xs mt-2" style={{ color: "var(--cd-danger)" }}>
                     {saveError}
                   </p>
                 )}
@@ -499,15 +504,15 @@ export default function AdminDetalhe() {
             {/* Quick info */}
             <div
               className="rounded-xl border p-4"
-              style={{ backgroundColor: "#DCE5F7", borderColor: "#A8BEE5" }}
+              style={{ backgroundColor: "var(--cd-mist)", borderColor: "var(--cd-blue-border)" }}
             >
               <p
                 className="text-xs font-semibold mb-1"
-                style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+                style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
               >
                 Protocolo
               </p>
-              <p className="text-sm font-bold" style={{ color: "#243F73" }}>
+              <p className="text-sm font-bold" style={{ color: "var(--cd-navy)" }}>
                 {request.protocol}
               </p>
             </div>

@@ -25,14 +25,14 @@ export default function Perfil() {
       <Link
         to="/"
         className="text-sm mb-6 flex items-center gap-1"
-        style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
+        style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
       >
         ← Voltar ao início
       </Link>
 
       <h1
         className="text-2xl font-bold mb-1"
-        style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+        style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
       >
         Meu perfil
       </h1>
@@ -44,17 +44,17 @@ export default function Perfil() {
         <div
           role="alert"
           className="rounded-xl border p-4 mb-6 flex items-start gap-3"
-          style={{ borderColor: "#FECACA", backgroundColor: "#FEF2F2" }}
+          style={{ borderColor: "var(--cd-danger-border)", backgroundColor: "var(--cd-danger-bg)" }}
         >
           <AlertCircle
             size={18}
             className="shrink-0 mt-0.5"
-            style={{ color: "#DC2626" }}
+            style={{ color: "var(--cd-danger)" }}
           />
           <div>
             <p
               className="font-semibold text-sm mb-0.5"
-              style={{ color: "#DC2626", fontFamily: "var(--font-display)" }}
+              style={{ color: "var(--cd-danger)", fontFamily: "var(--font-display)" }}
             >
               Acesso restrito
             </p>
@@ -68,18 +68,18 @@ export default function Perfil() {
 
       <div
         className="bg-white rounded-xl border p-6"
-        style={{ borderColor: "#DCE5F7" }}
+        style={{ borderColor: "var(--cd-border)" }}
       >
         <div className="flex items-center gap-3 mb-6">
           <div
             className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
-            style={{ backgroundColor: "#DCE5F7" }}
+            style={{ backgroundColor: "var(--cd-mist)" }}
           >
-            <UserRound size={24} style={{ color: "#243F73" }} />
+            <UserRound size={24} style={{ color: "var(--cd-navy)" }} />
           </div>
           <p
             className="font-bold text-lg"
-            style={{ color: "#243F73", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--cd-navy)", fontFamily: "var(--font-display)" }}
           >
             {user.name}
           </p>
@@ -91,7 +91,7 @@ export default function Perfil() {
               <dt className="text-xs text-gray-500 mb-0.5">{row.label}</dt>
               <dd
                 className="text-sm font-medium wrap-break-word"
-                style={{ color: "#1a2535" }}
+                style={{ color: "var(--cd-ink)" }}
               >
                 {row.value}
               </dd>
