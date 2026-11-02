@@ -16,7 +16,6 @@ import {
   FileStack,
   ChevronDown,
   ArrowRight,
-  LogOut,
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router"
@@ -38,6 +37,7 @@ import {
 import { formatDateOnlyPtBR } from "../utils/date"
 import { RequestServiceError, requestService } from "../services/requestService"
 import StatusBadge from "../components/StatusBadge"
+import UserMenu, { useLogout } from "../components/UserMenu"
 
 const STATUS_FILTER_OPTIONS: Array<{
   label: string
@@ -57,6 +57,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true)
   const [loadError, setLoadError] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
+  const handleLogout = useLogout()
 
   useEffect(() => {
     let cancelled = false
@@ -201,14 +202,7 @@ export default function AdminDashboard() {
         </nav>
 
         <div className="p-3 border-t" style={{ borderColor: "#1d3460" }}>
-          <Link
-            to="/"
-            className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium w-full transition-all hover:bg-white/10"
-            style={{ color: "#7A9ED4", fontFamily: "var(--font-display)" }}
-          >
-            <LogOut size={15} />
-            Sair
-          </Link>
+          <UserMenu variant="admin" />
         </div>
       </aside>
 
@@ -225,13 +219,14 @@ export default function AdminDashboard() {
           >
             Dashboard
           </h1>
-          <Link
-            to="/"
+          <button
+            type="button"
+            onClick={handleLogout}
             className="md:hidden text-sm font-medium"
             style={{ color: "#5978B5", fontFamily: "var(--font-display)" }}
           >
             Sair
-          </Link>
+          </button>
         </header>
 
         <div className="p-4 sm:p-6 max-w-5xl">

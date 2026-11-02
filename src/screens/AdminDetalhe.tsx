@@ -5,7 +5,6 @@ import {
   ChevronDown,
   Save,
   CheckCircle2,
-  LogOut,
   ClipboardList,
   ArrowLeft,
   AlertCircle,
@@ -21,6 +20,7 @@ import { formatDateOnlyPtBR, formatDateTimePtBR } from "../utils/date"
 import { RequestServiceError, requestService } from "../services/requestService"
 import StatusBadge from "../components/StatusBadge"
 import RequestAttachment from "../components/RequestAttachment"
+import UserMenu from "../components/UserMenu"
 
 type AsyncLoadStatus = "loading" | "not-found" | "error" | "found"
 type LoadStatus = "missing" | AsyncLoadStatus
@@ -213,14 +213,7 @@ export default function AdminDetalhe() {
           ))}
         </nav>
         <div className="p-3 border-t" style={{ borderColor: "#1d3460" }}>
-          <Link
-            to="/"
-            className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium w-full hover:bg-white/10"
-            style={{ color: "#7A9ED4", fontFamily: "var(--font-display)" }}
-          >
-            <LogOut size={15} />
-            Sair
-          </Link>
+          <UserMenu variant="admin" />
         </div>
       </aside>
 

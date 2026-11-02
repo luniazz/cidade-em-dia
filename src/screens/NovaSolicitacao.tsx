@@ -17,6 +17,7 @@ import {
 } from "../domain/attachments"
 import { RequestServiceError, requestService } from "../services/requestService"
 import { attachmentService } from "../services/attachmentService"
+import { useAuth } from "../context/AuthContext"
 
 const CATEGORY_DESCRIPTIONS: Record<RequestCategoryId, string> = {
   "buracos-vias": "Buracos, afundamentos ou danos no pavimento",
@@ -30,9 +31,15 @@ type TextFieldKey = "address" | "reference" | "description" | "name" | "email"
 
 export default function NovaSolicitacao() {
   const navigate = useNavigate()
-  const [form, setForm] = useState<RequestFormValues>(
-    createEmptyRequestFormValues(),
-  )
+  const { user } = useAuth()
+  // Cidadão autenticado tem nome e e-mail preenchidos a partir do perfil,
+  // ainda editáveis; sem login o formulário começa vazio, como antes.
+  const [form, setForm] = useState<RequestFormValues>(() => {
+    const empty = createEmptyRequestFormValues()
+    return user?.role === "cidadao"
+      ? { ...empty, name: user.name, email: user.email }
+      : empty
+  })
   const [photoFile, setPhotoFile] = useState<File | null>(null)
   const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null)
   const [photoError, setPhotoError] = useState<string | null>(null)

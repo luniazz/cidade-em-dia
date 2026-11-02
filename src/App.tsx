@@ -9,6 +9,11 @@ import Detalhes from "./screens/Detalhes"
 import AdminDashboard from "./screens/AdminDashboard"
 import AdminDetalhe from "./screens/AdminDetalhe"
 import NotFound from "./screens/NotFound"
+import Entrar from "./screens/Entrar"
+import Perfil from "./screens/Perfil"
+import RequireAuth from "./components/RequireAuth"
+import { useAuth } from "./context/AuthContext"
+import { ADMIN_ROLES } from "./domain/auth"
 import { RequestServiceError, requestService } from "./services/requestService"
 
 /** Restaura o topo da página a cada troca de rota. */
@@ -26,6 +31,7 @@ export default function App() {
   const [appReady, setAppReady] = useState(false)
   const [initError, setInitError] = useState<string | null>(null)
   const { pathname } = useLocation()
+  const { ready: authReady } = useAuth()
   const normalizedPathname = pathname.toLowerCase()
 
   // Só "/admin" e sub-rotas reais de "/admin/" usam o layout administrativo —
@@ -69,7 +75,9 @@ export default function App() {
     )
   }
 
-  if (!appReady) {
+  // Também aguarda a restauração da sessão, para que as rotas protegidas não
+  // redirecionem para o login antes de saber se já existe um usuário logado.
+  if (!appReady || !authReady) {
     return (
       <div
         className="min-h-screen flex items-center justify-center"
@@ -99,11 +107,17 @@ export default function App() {
         <Route path="/solicitacao/sucesso" element={<Sucesso />} />
         <Route path="/acompanhar" element={<Acompanhar />} />
         <Route path="/solicitacao/:protocolo" element={<Detalhes />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route
-          path="/admin/solicitacao/:protocolo"
-          element={<AdminDetalhe />}
-        />
+        <Route path="/entrar" element={<Entrar />} />
+        <Route element={<RequireAuth />}>
+          <Route path="/perfil" element={<Perfil />} />
+        </Route>
+        <Route element={<RequireAuth allowedRoles={ADMIN_ROLES} />}>
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route
+            path="/admin/solicitacao/:protocolo"
+            element={<AdminDetalhe />}
+          />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
 

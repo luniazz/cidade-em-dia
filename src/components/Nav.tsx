@@ -1,6 +1,9 @@
-import { MapPin, Menu, X } from "lucide-react"
+import { LogIn, LogOut, MapPin, Menu, UserRound, X } from "lucide-react"
 import { useState } from "react"
 import { Link, NavLink } from "react-router"
+import { useAuth } from "../context/AuthContext"
+import { USER_ROLE_LABELS } from "../domain/auth"
+import UserMenu, { useLogout } from "./UserMenu"
 
 interface NavLinkItem {
   label: string
@@ -15,6 +18,8 @@ const links: NavLinkItem[] = [
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { user } = useAuth()
+  const handleLogout = useLogout()
 
   return (
     <header
@@ -61,6 +66,19 @@ export default function Nav() {
           >
             Área da Prefeitura
           </NavLink>
+          {user ? (
+            <UserMenu variant="public" />
+          ) : (
+            <NavLink
+              to="/entrar"
+              className={({ isActive }) =>
+                `nav-link ml-2 flex items-center gap-1.5 ${isActive ? "active" : ""}`
+              }
+            >
+              <LogIn size={15} />
+              Entrar
+            </NavLink>
+          )}
         </nav>
 
         {/* Mobile menu button */}
@@ -105,6 +123,50 @@ export default function Nav() {
           >
             Área da Prefeitura
           </NavLink>
+          <div
+            className="border-t mt-1 pt-2 flex flex-col gap-1"
+            style={{ borderColor: "#DCE5F7" }}
+          >
+            {user ? (
+              <>
+                <p className="px-3 pb-1 text-xs text-gray-500">
+                  {user.name} · {USER_ROLE_LABELS[user.role]}
+                </p>
+                <NavLink
+                  to="/perfil"
+                  onClick={() => setMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `nav-link text-left flex items-center gap-1.5 ${isActive ? "active" : ""}`
+                  }
+                >
+                  <UserRound size={15} />
+                  Meu perfil
+                </NavLink>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false)
+                    void handleLogout()
+                  }}
+                  className="nav-link text-left flex items-center gap-1.5"
+                >
+                  <LogOut size={15} />
+                  Sair
+                </button>
+              </>
+            ) : (
+              <NavLink
+                to="/entrar"
+                onClick={() => setMenuOpen(false)}
+                className={({ isActive }) =>
+                  `nav-link text-left flex items-center gap-1.5 ${isActive ? "active" : ""}`
+                }
+              >
+                <LogIn size={15} />
+                Entrar
+              </NavLink>
+            )}
+          </div>
         </div>
       )}
     </header>
