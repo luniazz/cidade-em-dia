@@ -14,13 +14,13 @@ import {
   ClipboardList,
   CheckCircle2,
   FileStack,
-  ChevronDown,
   ArrowRight,
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router"
 import { CHART_COLORS } from "../config/chart"
 import { deriveRequestAnalytics } from "../domain/requestAnalytics"
+import { filterRequests, paginate } from "../domain/requestListing"
 import type {
   RequestCategoryId,
   RequestStatus,
@@ -30,15 +30,19 @@ import {
   REQUEST_CATEGORIES,
   REQUEST_STATUSES,
   REQUEST_STATUS_LABELS,
-  getRequestCategoryLabel,
   isRequestCategoryId,
   isRequestStatus,
 } from "../domain/requests"
-import { formatDateOnlyPtBR } from "../utils/date"
 import { RequestServiceError, requestService } from "../services/requestService"
-import StatusBadge from "../components/StatusBadge"
+import AdminRequestTable from "../components/AdminRequestTable"
+import AdminSidebar, {
+  AdminHomeLink,
+  AdminMobileNav,
+} from "../components/AdminSidebar"
+import FilterSelect from "../components/FilterSelect"
+import RequestPagination from "../components/RequestPagination"
 import ThemeToggle from "../components/ThemeToggle"
-import UserMenu, { useLogout } from "../components/UserMenu"
+import { useLogout } from "../components/UserMenu"
 
 const STATUS_FILTER_OPTIONS: Array<{
   label: string
@@ -128,21 +132,16 @@ export default function AdminDashboard() {
   // listagem exibida na tabela usa uma cópia invertida para mostrar as mais
   // recentes primeiro, sem alterar a ordem usada nos cálculos de KPIs e
   // gráficos.
-  const filtered = [...requests].reverse().filter((r) => {
-    const matchStatus = filterStatus === "all" || r.status === filterStatus
-    const matchCat = filterCategory === "all" || r.categoryId === filterCategory
-    return matchStatus && matchCat
+  const filtered = filterRequests([...requests].reverse(), {
+    query: "",
+    status: filterStatus,
+    categoryId: filterCategory,
   })
-
-  const totalFiltered = filtered.length
-  const totalPages = Math.max(1, Math.ceil(totalFiltered / PAGE_SIZE))
   // A página efetiva nunca ultrapassa o total de páginas válido para o
   // resultado filtrado atual, mesmo que `currentPage` ainda não tenha sido
   // sincronizada (ex.: um filtro acabou de reduzir o total de páginas).
-  const effectivePage = Math.min(currentPage, totalPages)
-  const firstIndex = (effectivePage - 1) * PAGE_SIZE
-  const lastIndex = Math.min(firstIndex + PAGE_SIZE, totalFiltered)
-  const pageItems = filtered.slice(firstIndex, lastIndex)
+  const page = paginate(filtered, currentPage, PAGE_SIZE)
+  const effectivePage = page.page
 
   useEffect(() => {
     if (currentPage !== effectivePage) {
@@ -157,56 +156,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="flex min-h-screen" style={{ backgroundColor: "var(--cd-page)" }}>
-      {/* Sidebar */}
-      <aside
-        className="hidden md:flex flex-col w-56 border-r shrink-0"
-        style={{ backgroundColor: "var(--cd-brand)", borderColor: "#1d3460" }}
-      >
-        <div className="px-5 py-5 border-b" style={{ borderColor: "#1d3460" }}>
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-md bg-white/20 flex items-center justify-center">
-              <LayoutDashboard size={14} color="white" />
-            </div>
-            <span
-              className="text-white font-bold text-sm"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Cidade em Dia
-            </span>
-          </div>
-          <p className="text-xs mt-1" style={{ color: "#7A9ED4" }}>
-            Área da Prefeitura
-          </p>
-        </div>
-
-        <nav className="flex flex-col gap-1 p-3 flex-1">
-          {[
-            { icon: LayoutDashboard, label: "Dashboard", active: true },
-            { icon: ClipboardList, label: "Solicitações", active: false },
-          ].map((item) => (
-            <div
-              key={item.label}
-              aria-current={item.active ? "page" : undefined}
-              className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium"
-              style={{
-                backgroundColor: item.active
-                  ? "rgba(255,255,255,0.12)"
-                  : "transparent",
-                color: item.active ? "white" : "#7A9ED4",
-                fontFamily: "var(--font-display)",
-              }}
-            >
-              <item.icon size={15} />
-              {item.label}
-            </div>
-          ))}
-        </nav>
-
-        <div className="p-3 border-t" style={{ borderColor: "#1d3460" }}>
-          <ThemeToggle variant="admin" />
-          <UserMenu variant="admin" />
-        </div>
-      </aside>
+      <AdminSidebar active="dashboard" />
 
       {/* Main */}
       <div className="flex-1 min-w-0">
@@ -222,6 +172,7 @@ export default function AdminDashboard() {
             Dashboard
           </h1>
           <div className="md:hidden flex items-center gap-2">
+            <AdminHomeLink variant="header" />
             <ThemeToggle variant="public" />
             <button
               type="button"
@@ -233,6 +184,7 @@ export default function AdminDashboard() {
             </button>
           </div>
         </header>
+        <AdminMobileNav active="dashboard" />
 
         <div className="p-4 sm:p-6 max-w-5xl">
           {/* KPIs */}
@@ -430,215 +382,63 @@ export default function AdminDashboard() {
               >
                 Solicitações recentes
               </h2>
-              <div className="flex items-center gap-2">
-                <div className="relative">
-                  <select
-                    value={filterStatus}
-                    onChange={(e) => {
-                      const value = e.target.value
-                      if (value === "all" || isRequestStatus(value)) {
-                        setFilterStatus(value)
-                        setCurrentPage(1)
-                      }
-                    }}
-                    aria-label="Filtrar por status"
-                    className="text-xs rounded-lg border pl-3 pr-7 py-1.5 appearance-none"
-                    style={{
-                      borderColor: "var(--cd-border)",
-                      fontFamily: "var(--font-display)",
-                    }}
-                  >
-                    {STATUS_FILTER_OPTIONS.map((s) => (
-                      <option key={s.val} value={s.val}>
-                        {s.label}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown
-                    size={12}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
-                  />
-                </div>
-                <div className="relative">
-                  <select
-                    value={filterCategory}
-                    onChange={(e) => {
-                      const value = e.target.value
-                      if (value === "all" || isRequestCategoryId(value)) {
-                        setFilterCategory(value)
-                        setCurrentPage(1)
-                      }
-                    }}
-                    aria-label="Filtrar por categoria"
-                    className="text-xs rounded-lg border pl-3 pr-7 py-1.5 appearance-none"
-                    style={{
-                      borderColor: "var(--cd-border)",
-                      fontFamily: "var(--font-display)",
-                    }}
-                  >
-                    <option value="all">Todas as categorias</option>
-                    {REQUEST_CATEGORIES.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.label}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown
-                    size={12}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
-                  />
-                </div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <FilterSelect
+                  label="Filtrar por status"
+                  value={filterStatus}
+                  onChange={(value) => {
+                    if (value === "all" || isRequestStatus(value)) {
+                      setFilterStatus(value)
+                      setCurrentPage(1)
+                    }
+                  }}
+                >
+                  {STATUS_FILTER_OPTIONS.map((s) => (
+                    <option key={s.val} value={s.val}>
+                      {s.label}
+                    </option>
+                  ))}
+                </FilterSelect>
+                <FilterSelect
+                  label="Filtrar por categoria"
+                  value={filterCategory}
+                  onChange={(value) => {
+                    if (value === "all" || isRequestCategoryId(value)) {
+                      setFilterCategory(value)
+                      setCurrentPage(1)
+                    }
+                  }}
+                >
+                  <option value="all">Todas as categorias</option>
+                  {REQUEST_CATEGORIES.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.label}
+                    </option>
+                  ))}
+                </FilterSelect>
+                <Link
+                  to="/admin/solicitacoes"
+                  className="text-xs font-medium flex items-center gap-1"
+                  style={{
+                    color: "var(--cd-blue)",
+                    fontFamily: "var(--font-display)",
+                  }}
+                >
+                  Ver todas <ArrowRight size={12} />
+                </Link>
               </div>
             </div>
 
-            <div
-              className="overflow-x-auto"
-              tabIndex={0}
-              role="region"
-              aria-label="Tabela de solicitações recentes com rolagem horizontal"
-            >
-              <table className="w-full text-sm min-w-160">
-                <thead>
-                  <tr style={{ backgroundColor: "var(--cd-page)" }}>
-                    {[
-                      "Protocolo",
-                      "Categoria",
-                      "Endereço",
-                      "Data",
-                      "Status",
-                      "",
-                    ].map((h) => (
-                      <th
-                        key={h}
-                        className="text-left px-4 py-3 text-xs font-semibold text-gray-600 border-b"
-                        style={{
-                          borderColor: "var(--cd-border)",
-                          fontFamily: "var(--font-display)",
-                        }}
-                      >
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y">
-                  {loading ? (
-                    <tr>
-                      <td
-                        colSpan={6}
-                        className="px-4 py-8 text-center text-sm text-gray-500"
-                      >
-                        Carregando solicitações...
-                      </td>
-                    </tr>
-                  ) : loadError ? (
-                    <tr>
-                      <td
-                        colSpan={6}
-                        className="px-4 py-8 text-center text-sm"
-                        style={{ color: "var(--cd-danger)" }}
-                      >
-                        {loadError}
-                      </td>
-                    </tr>
-                  ) : filtered.length === 0 ? (
-                    <tr>
-                      <td
-                        colSpan={6}
-                        className="px-4 py-8 text-center text-sm text-gray-500"
-                      >
-                        Nenhuma solicitação encontrada com os filtros
-                        selecionados.
-                      </td>
-                    </tr>
-                  ) : (
-                    pageItems.map((req) => (
-                      <tr key={req.id}>
-                        <td
-                          className="px-4 py-3 font-mono text-xs font-medium"
-                          style={{ color: "var(--cd-navy)" }}
-                        >
-                          {req.protocol}
-                        </td>
-                        <td className="px-4 py-3 text-xs text-gray-600">
-                          {getRequestCategoryLabel(req.categoryId)}
-                        </td>
-                        <td className="px-4 py-3 text-xs text-gray-500 max-w-[180px] truncate">
-                          {req.address}
-                        </td>
-                        <td className="px-4 py-3 text-xs text-gray-500">
-                          {formatDateOnlyPtBR(req.date) ?? "Data inválida"}
-                        </td>
-                        <td className="px-4 py-3">
-                          <StatusBadge status={req.status} />
-                        </td>
-                        <td className="px-4 py-3">
-                          <Link
-                            to={`/admin/solicitacao/${req.protocol}`}
-                            className="text-xs font-medium flex items-center gap-1"
-                            style={{
-                              color: "var(--cd-blue)",
-                              fontFamily: "var(--font-display)",
-                            }}
-                          >
-                            Ver <ArrowRight size={12} />
-                          </Link>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
+            <AdminRequestTable
+              items={page.items}
+              loading={loading}
+              error={loadError}
+              emptyMessage="Nenhuma solicitação encontrada com os filtros selecionados."
+              ariaLabel="Tabela de solicitações recentes com rolagem horizontal"
+            />
 
-            {!loading && !loadError && totalFiltered > 0 ? (
-              <div
-                className="px-5 py-3 border-t flex items-center justify-between flex-wrap gap-3"
-                style={{ borderColor: "var(--cd-border)" }}
-              >
-                <p className="text-xs text-gray-500">
-                  Mostrando {firstIndex + 1}–{lastIndex} de {totalFiltered}
-                </p>
-                {totalPages > 1 ? (
-                  <div className="flex items-center gap-3">
-                    <button
-                      type="button"
-                      disabled={effectivePage <= 1}
-                      onClick={() => setCurrentPage(effectivePage - 1)}
-                      className="text-xs font-medium px-3 py-1.5 rounded-lg border transition-colors enabled:cursor-pointer enabled:hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-                      style={{
-                        borderColor: "var(--cd-border)",
-                        color: "var(--cd-blue)",
-                        fontFamily: "var(--font-display)",
-                      }}
-                    >
-                      Anterior
-                    </button>
-                    <p
-                      className="text-xs"
-                      style={{
-                        color: "var(--cd-navy)",
-                        fontFamily: "var(--font-display)",
-                      }}
-                    >
-                      Página {effectivePage} de {totalPages}
-                    </p>
-                    <button
-                      type="button"
-                      disabled={effectivePage >= totalPages}
-                      onClick={() => setCurrentPage(effectivePage + 1)}
-                      className="text-xs font-medium px-3 py-1.5 rounded-lg border transition-colors enabled:cursor-pointer enabled:hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-                      style={{
-                        borderColor: "var(--cd-border)",
-                        color: "var(--cd-blue)",
-                        fontFamily: "var(--font-display)",
-                      }}
-                    >
-                      Próxima
-                    </button>
-                  </div>
-                ) : null}
-              </div>
+            {!loading && !loadError ? (
+              <RequestPagination page={page} onPageChange={setCurrentPage} />
             ) : null}
           </div>
         </div>

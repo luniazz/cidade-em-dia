@@ -8,6 +8,7 @@ import Acompanhar from "./screens/Acompanhar"
 import Detalhes from "./screens/Detalhes"
 import AdminDashboard from "./screens/AdminDashboard"
 import AdminDetalhe from "./screens/AdminDetalhe"
+import AdminSolicitacoes from "./screens/AdminSolicitacoes"
 import NotFound from "./screens/NotFound"
 import Entrar from "./screens/Entrar"
 import Perfil from "./screens/Perfil"
@@ -113,6 +114,7 @@ export default function App() {
         </Route>
         <Route element={<RequireAuth allowedRoles={ADMIN_ROLES} />}>
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/solicitacoes" element={<AdminSolicitacoes />} />
           <Route
             path="/admin/solicitacao/:protocolo"
             element={<AdminDetalhe />}

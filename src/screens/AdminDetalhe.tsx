@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router"
+import { Link, useLocation, useParams } from "react-router"
 import {
-  LayoutDashboard,
   ChevronDown,
   Save,
   CheckCircle2,
-  ClipboardList,
   ArrowLeft,
   AlertCircle,
 } from "lucide-react"
@@ -21,13 +19,15 @@ import { RequestServiceError, requestService } from "../services/requestService"
 import StatusBadge from "../components/StatusBadge"
 import RequestAttachment from "../components/RequestAttachment"
 import ThemeToggle from "../components/ThemeToggle"
-import UserMenu from "../components/UserMenu"
+import AdminSidebar, { AdminHomeLink } from "../components/AdminSidebar"
+import { getRequestListBackPath } from "../domain/requestListing"
 
 type AsyncLoadStatus = "loading" | "not-found" | "error" | "found"
 type LoadStatus = "missing" | AsyncLoadStatus
 
 export default function AdminDetalhe() {
   const { protocolo } = useParams<{ protocolo: string }>()
+  const backPath = getRequestListBackPath(useLocation().state)
 
   const [asyncLoadStatus, setAsyncLoadStatus] =
     useState<AsyncLoadStatus>("loading")
@@ -126,12 +126,12 @@ export default function AdminDetalhe() {
             style={{ borderColor: "var(--cd-border)" }}
           >
             <Link
-              to="/admin"
+              to={backPath}
               className="flex items-center gap-1.5 text-sm font-medium"
               style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
             >
               <ArrowLeft size={16} />
-              Painel
+              Solicitações
             </Link>
           </header>
           <div className="p-4 sm:p-6 max-w-2xl">
@@ -163,7 +163,7 @@ export default function AdminDetalhe() {
                   <p className="text-xs text-red-600">
                     {loadStatus === "error"
                       ? (loadErrorMessage ?? "Tente novamente em instantes.")
-                      : "Verifique o protocolo e volte ao painel."}
+                      : "Verifique o protocolo e volte às solicitações."}
                   </p>
                 </div>
               </div>
@@ -176,48 +176,7 @@ export default function AdminDetalhe() {
 
   return (
     <div className="flex min-h-screen" style={{ backgroundColor: "var(--cd-page)" }}>
-      {/* Sidebar */}
-      <aside
-        className="hidden md:flex flex-col w-56 border-r shrink-0"
-        style={{ backgroundColor: "var(--cd-brand)", borderColor: "#1d3460" }}
-      >
-        <div className="px-5 py-5 border-b" style={{ borderColor: "#1d3460" }}>
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-md bg-white/20 flex items-center justify-center">
-              <LayoutDashboard size={14} color="white" />
-            </div>
-            <span
-              className="text-white font-bold text-sm"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Cidade em Dia
-            </span>
-          </div>
-          <p className="text-xs mt-1" style={{ color: "#7A9ED4" }}>
-            Área da Prefeitura
-          </p>
-        </div>
-        <nav className="flex flex-col gap-1 p-3 flex-1">
-          {[
-            { icon: LayoutDashboard, label: "Dashboard" },
-            { icon: ClipboardList, label: "Solicitações" },
-          ].map((item) => (
-            <Link
-              key={item.label}
-              to="/admin"
-              className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-all"
-              style={{ color: "#7A9ED4", fontFamily: "var(--font-display)" }}
-            >
-              <item.icon size={15} />
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-        <div className="p-3 border-t" style={{ borderColor: "#1d3460" }}>
-          <ThemeToggle variant="admin" />
-          <UserMenu variant="admin" />
-        </div>
-      </aside>
+      <AdminSidebar active="solicitacoes" />
 
       <div className="flex-1 min-w-0">
         {/* Header */}
@@ -226,12 +185,12 @@ export default function AdminDetalhe() {
           style={{ borderColor: "var(--cd-border)" }}
         >
           <Link
-            to="/admin"
+            to={backPath}
             className="flex items-center gap-1.5 text-sm font-medium"
             style={{ color: "var(--cd-blue)", fontFamily: "var(--font-display)" }}
           >
             <ArrowLeft size={16} />
-            Painel
+            Solicitações
           </Link>
           <span className="text-gray-300">/</span>
           <h1
@@ -240,7 +199,8 @@ export default function AdminDetalhe() {
           >
             {request.protocol}
           </h1>
-          <div className="md:hidden ml-auto">
+          <div className="md:hidden ml-auto flex items-center gap-2">
+            <AdminHomeLink variant="header" />
             <ThemeToggle variant="public" />
           </div>
         </header>

@@ -42,7 +42,10 @@ export default function UserMenu({ variant }: UserMenuProps) {
   useEffect(() => {
     if (!open) return
 
-    const handlePointerDown = (event: MouseEvent) => {
+    // Fecha no `click`, não no `mousedown`: fechar antes do clique terminar
+    // muda o layout da sidebar (os itens do menu somem e os controles vizinhos
+    // descem), o `mouseup` cai em outro lugar e o clique fora se perde.
+    const handleOutsideClick = (event: MouseEvent) => {
       if (!containerRef.current?.contains(event.target as Node)) {
         setOpen(false)
       }
@@ -51,10 +54,10 @@ export default function UserMenu({ variant }: UserMenuProps) {
       if (event.key === "Escape") setOpen(false)
     }
 
-    document.addEventListener("mousedown", handlePointerDown)
+    document.addEventListener("click", handleOutsideClick)
     document.addEventListener("keydown", handleKeyDown)
     return () => {
-      document.removeEventListener("mousedown", handlePointerDown)
+      document.removeEventListener("click", handleOutsideClick)
       document.removeEventListener("keydown", handleKeyDown)
     }
   }, [open])
